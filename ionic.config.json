@@ -1,0 +1,7 @@
+{
+  "name": "magic-recipies",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
