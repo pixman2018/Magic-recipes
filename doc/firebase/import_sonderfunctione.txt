@@ -1,0 +1,9 @@
+Firestore Timestamp
+import Timestamp = firebase.firestore.Timestamp;
+
+import * as firebase from 'firebase/app';
+import 'firebase/firestore';
+import { serverTimestamp, Timestamp } from '@angular/fire/firestore';
+
+Id erstellen
+this.\_afs.createId();

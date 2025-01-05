@@ -1,0 +1,80 @@
+Id erstellen
+this.\_afs.createId();
+
+Alle Geben einen Promise<void> zurück
+Create mit ID
+this.db.doc(`courses/${courseId}`).set(course)
+Create ohne ID
+this.db.collection('/courses').add(course)
+Edit
+this.db.doc(`courses/${courseId}`).update(changes)
+Delete
+this.db.doc(`courses/${courseId}`).delete()
+
+Achtung:
+Bei Verschachtelten Collection wird bei Delete die Collection im Document nicht gelöscht.
+
+Firestore Batchtrnsaktionen oder Batch Schreibvorgänge
+Braucht man für
+
+- löschen von Collection in Documente beim löschen des Document
+
+Eine Collection kann man nicht löschen, man kan nur Document löschen.
+
+Hierfür brauchen wir eine Batch-Schreibaktion in Firestore. Hierbei handelt es sich um eine Transaktion, die nur Schreibvorgänge hat, daher gibt es keine Lesesperren in der Datenbank. Diese Transaktion wirkt sich auf mehrere Teile der Datenbank aus.
+
+In diesem Fall werden sowohl das Dokument als auch jedes einzelne Dokument in der collection im Document gelöscht.
+
+firestore.batch()
+Method
+
+- commit
+  Erzeugt ein Promise
+  Wird der Promise erfolgreich gelöscht, war der Commit erolgreich
+- set
+- update
+- delete
+
+Batch-Rechte sint atomic. Das bedeutet also, dass entweder alle Vorgänge des Stapels erfolgreich in der Datenbank ausgeführt werden, oder keiner. Genau wie in SQL Datenbank transaction.
+
+delete()
+batch.delete(ref);
+
+    public deleteCourseAndLessons(courseId: string): Observable<any> {
+       return  this.db.collection(`courses/${courseId}/lessons`)
+            .get()
+            .pipe(
+                concatMap( results => {
+                    const lessons = convertSnaps<Lesson>(results);
+                    const batch = this.db.firestore.batch();
+                    const courseRef = this.db.doc(`courses/${courseId}`).ref;
+
+                    batch.delete(courseRef);
+
+                    for(let lession of lessons) {
+                        const lessionRef = this.db.doc(`courses/${courseId}/lession/${lession.id}`).ref;
+                        batch.delete(lessionRef);
+                    }
+
+                    return from(batch.commit());
+                }),
+            );
+    }
+
+set()
+Erstes Arbugent:
+
+- einen Verweis auf ein Dokument in der Datenbank übergeben, das vorhanden ist oder nicht.
+  Zweites Argument
+- die Daten die gesetzt werden sollen
+  Drittes Argument. Alle vorhandenen Dateien werden überschrieben
+  Drittes Argument
+  Optionsobjekt, mit den du die Daten zusammenfügen kannst.
+  {merge: true}
+
+batch.set(ref, {}, {merge: true});
+
+update()
+Hier müssen wir einen Verweis auf ein Dokument und dann die Felder übergeben, die wir ändern möchten.
+
+update(ref, {})

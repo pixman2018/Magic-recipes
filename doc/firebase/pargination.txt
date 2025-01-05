@@ -1,0 +1,20 @@
+Pargination
+1. resolver
+2. resolver im Routing registrieren
+  this.course = this._route.snapshot.data['course'];
+3. find method im service
+  public findLessioms(courseId: string, sortOrder: OrderByDirection = 'asc', pageNumber: number = 0 , pageSize=3): Observable<Lesson[]> {
+    return this.db.collection(`courses/${courseId}/lessons`, ref => ref
+        .orderBy('seqNo', sortOrder)
+        .limit(pageSize)
+        .startAfter(pageNumber * pageSize)
+    ).get()
+    .pipe(
+        map(results => convertSnaps<Lesson>(results)),
+    );
+  }
+  4. ngOnInt default loaded
+  5. lastPageLoaded: number = 0;
+    onLoadMore Button mit
+    - this.lastPageLoaded++;
+    - findLessioms

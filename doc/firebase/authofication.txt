@@ -1,0 +1,48 @@
+Authification
+Der Firebase-Authentifizierungsdienst wird beim erfolgreichen login ein Json-Web-Token oder JWT ausgeben, das die Identität des Benutzers beweist. Den kannst du dann in deiner Anwendung anwenden, um deren Sicherheit zu gewährleisten.
+Du kannst dem Json-Web-Token zum Beispiel hinzufügen, dass der Benutzer ein Administrator ist, und ihm Zugang auf bestimmte Funktionen zu geben.
+
+Firebase UI
+install
+ npm install firebaseui-angular --save
+ npm install firebase firebaseui @angular/fire firebaseui-angular --save
+
+https://github.com/firebase/firebaseui-web
+https://github.com/RaphaelJenni/FirebaseUI-Angular
+
+Eigenschaften
+- Anmeldung mit allen bekannte Netzwerke
+- validiert automatisch Ihre Authentifizierungsdaten über die Firebase
+- Wir werden ein Json-Web-Token zurückerhalten, das nicht nur die Identität des Benutzers, sondern auch seine Rollen belegt.
+
+Token
+Token Holen
+_afAuth.idToken.subscribe(jwt => console.log('jwt', jwt));
+
+
+Auf der Webseite https://jwt.io/ kann man einen JWT-  Token auslesen
+
+Benutzerdefinierte Daten in einem Token einfügen
+- werden in der JSON schreibweise festgelegt z.B. { "admin": true  }
+
+
+Authentication Daten holen
+_afAuth.authState.subscribe(auth => console.log('auth', auth) )
+
+logout
+this._afAuth.signOut()
+
+Mögliche Properties
+this.isLoggeIn$ = _afAuth.authState.pipe(map(user => !!user));
+- user angemeldet true
+- user abegmeldet undefined
+
+this.picturesUrl$ = _afAuth.authState.pipe(map(user => user ? user.photoURL : null));
+
+Guard
+https://github.com/angular/angularfire/blob/main/site/src/auth/route-guards.md
+Beispiel:
+Wenn user nicht angemeldet ist dan zu login
+const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
+Zugang nur für Admin
+const adminOnly = () => hasCustomClaim('admin');

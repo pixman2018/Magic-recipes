@@ -4,13 +4,30 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'folder/Inbox',
+    redirectTo: 'home',
     pathMatch: 'full'
+  },
+  {
+    path: 'home',
+    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
   },
   {
     path: 'folder/:id',
     loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
-  }
+  },
+  {
+    path: 'recipies-list',
+    loadChildren: () => import('./recipies/recipies-list/recipies-list.module').then( m => m.RecipiesListPageModule)
+  },
+  {
+    path: 'recipe/:recipeId',
+    loadChildren: () => import('./recipies/recipe/recipe.module').then( m => m.RecipePageModule)
+  },
+  {
+    path: 'recipe-form',
+    loadChildren: () => import('./recipies/recipe-form/recipe-form.module').then( m => m.RecipeFormPageModule)
+  },
+
 ];
 
 @NgModule({

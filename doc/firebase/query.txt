@@ -1,0 +1,41 @@
+
+get document
+Dependency Injection
+AngularFirestore
+Braucht das Module AngularFireNModule in den App Modulen
+
+constructor(private db: AngularFirestore) {}
+
+this.db.doc('/courses/11S7rairOVDUYWZDxvOk').get()
+.subscribe(snap => {
+console.log(snap.id);
+console.log(snap.data());
+});
+
+where
+this.db.collection('/courses/11S7rairOVDUYWZDxvOk/lessons',
+ref => ref.where('seqNo', '<=', 1)
+).get()
+
+- ==
+- >
+- > =
+- <
+- <=
+- !=
+- array-contains
+- array-contains-any
+- in
+- not in
+
+AND
+.where('seqNo', '<=', 20)
+.where('url', '==', 'angular-forms-course')
+
+OR
+.where("fieldName", "in", ["fieldValue1", "fieldValue2"]);
+
+orderBy
+this.db.collection('/courses/11S7rairOVDUYWZDxvOk/lessons', ref => ref
+.where('seqNo', '<=', 5)
+.orderBy('seqNo')

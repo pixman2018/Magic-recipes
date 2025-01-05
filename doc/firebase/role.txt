@@ -1,0 +1,120 @@
+Role
+Mögliche rechte sind
+- read
+- write
+
+Leserechte in zwei verschiede Arten
+- get
+nur lesen von Decument
+- list
+nur lesen von Collections
+
+Schreibrechte in drei verschiede Arten
+- create
+- update
+- delete
+
+Im Emulalor befindet sie sich in der Datei firestore-rules
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if true;
+    }
+  }
+}
+Erklärung der Regen
+match /databases/{database}/documents {
+Die Regel soll auf den root von der Datenbank angewendet werden
+Diese Angabe muss in jeder Regel stehen.
+{database}
+ist eine Variable in einen match Block
+
+$(database)
+ist eine Variable außerhalb eines match Block
+
+match /{document=**} {
+  Ist eine Verschachtelte Regel
+
+{document=**}
+Jedes Document in der Datenbank
+{path=**}
+jeden Pfad in der Datenbank
+=**
+ist ein Platzhalter
+
+allow read, write: if true;
+Regel für lesen und schreiben
+
+allow read: if true;
+allow write: if false;
+lesen erlauben Schreiben verbieten
+
+Readonly für die Collection courses
+  match /databases/{database}/documents/courses/{courseId} {
+    allow read;
+  }
+
+Readonly für die Collection courses und die Collection lessons innerhalb des courses Document
+  match /databases/{database}/documents/courses/{courseId} {
+    allow read;
+
+    match /lessons/{lessonsId} {
+      allow read;
+    }
+  }
+
+Ab besten man schachtelt die Roles nach jeder Collection
+  match /databases/{database}/documents {
+    match /courses/{courseId} {
+      allow read;
+
+       match /lessons/{lessonsId} {
+        allow read;
+      }
+    }
+  }
+
+Token
+Beispiel:
+Sicherstellen das der User angemeldet ist.
+
+allow read: if request.auth.uid != null
+
+auth greift auf den token zu
+
+Function in roles
+geben immer einen boolean zurück.
+
+function isAuthenticated() {
+  return request.auth.uid != null;
+}
+
+ allow read: if isAuthenticated();
+
+Daten validieren
+Man kann Daten die zur Datenbank gesendet werden validieren.
+request.resource.data
+
+Mit request.resource greift man auf Daten zu, before sie in die Datenbank geschrieben werden.
+Abfragen
+
+- request.resource.data.seqNo is number
+- request.resource.data.seqNo  >= 0
+- request.resource.data[fieldName] is string
+- request.resource.data[fieldName].size() > 0
+
+Prüft  ob ein Document von den User exestiert
+exists(/databases/$(database)/documents/users/$(request.auth.uid));
+
+holt den usernamen mit get
+get(/databases/$(database)/documents/users/$(request.auth.uid)).data.username;
+
+Auswerten von Benutzerdefinierte Roles
+ 'admin' in request.auth.token
+
+Collection Group Query
+match /{path=**}/lessons/{lessonsId} {
+  allow read: if isKnownUser();
+}

@@ -1,0 +1,36 @@
+TypeScript
+Typescript
+never
+https://www.typescripttutorial.net/typescript-tutorial/typescript-never-type/
+Der Type enthält keinen Wert und ist null. Man kann in keinen Wert zuweisen.
+
+
+Du kannst zum Beispiel einen Kreuzungstyp haben, der gleichzeitig eine Zeichenkette und eine Zahl sein kann, was unmöglich ist:
+type Alphanumeric = string & number; // never
+
+Daher schließt der TypeScript-Compiler auf den Typ von Alphanumeric als never.
+Der Grund dafür ist, dass sich String und Number gegenseitig ausschließen. Mit anderen Worten: Ein Wert kann nicht gleichzeitig eine Zeichenkette und eine Zahl sein.
+
+Normalerweise verwenden Sie den Typ never, um den Rückgabetyp einer Funktion darzustellen, die die Kontrolle nie an den Aufrufer zurückgibt. Zum Beispiel eine Funktion, die immer einen Fehler auslöst:
+
+function raiseError(message: string): never {
+    throw new Error(message);
+}
+
+Wenn Du eine Funktion hast, die eine unendliche Schleife enthält, sollte ihr Rückgabetyp never sein. Zum Beispiel:
+function forever(): never {
+    while (true) {}
+  }
+
+Partail<Type>
+    Konstruiert einen Typ, bei dem alle Eigenschaften von Type auf optional gesetzt sind. Dieses Dienstprogramm gibt einen Typ zurück, der alle Untermengen eines gegebenen Typs darstellt.
+
+Error bei Optional Paramter
+Werte können undefined sein
+this.data?.course?.id,
+this.data?.course!.id,
+
+<T> generic argument
+
+Object key: string
+{[key: string]: string};

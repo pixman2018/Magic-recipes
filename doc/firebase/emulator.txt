@@ -1,0 +1,122 @@
+Lokaler Firebase Emulator
+
+Benötigt eine Java Installierung
+
+Der lokale Entwicklungsemulator ermöglicht es uns, unsere gesamte Entwicklung lokal durchzuführen, anstatt einer tatsächlichen Datenbank.
+
+Bei einer tatsächlichen Datenbank gibt es folgende Probleme
+
+- Testdaten erzeugen
+- Testdaten werden verändert oder gelöscht
+
+Eigenschaften des Lokaler Firebase Emulator
+
+- Eine lokale Kopie von Firestore auf unserem Entwicklungsrechner laufen lassen, den wir leicht zerstören und jederzeit mit neuen Daten starten können.
+- durchführen von Entwicklung von Firestore-Sicherheitsregeln
+- Entwicklung auf der lokalen Entwicklungsmaschine
+- Ausführen der Cloud Funktion von Firestore
+- Testen von Role und von verscheiden Usern
+
+Entwicklungsprojekt einrichten
+Ziel ist es alles für eine lokale Entwicklung mit firebase bereit zu stellen.
+
+1. firebase login:cli
+2. firebase init und wähle das aus was du brauchst
+3. Use an existing project
+   language Typescript
+   Do you want to use ESLint to catch probable bugs and enforce style? No
+   Do you want to install dependencies with npm now? Yes
+   What do you want to use as your public directory? dist (Ordner von build)
+   Configure as a single-page app (rewrite all urls to /index.html)? yes
+   Set up automatic builds and deploys with GitHub? no
+   What file should be used for Storage Rules? (storage.rules)
+4. Which Firebase emulators do you want to set up? Press Space to select emulators,
+   ◉ Authentication Emulator
+   ◉ Functions Emulator
+   ◉ Firestore Emulator
+   ◉ Hosting Emulator
+   ◉ Storage Emulator
+5. Which port do you want to use for the auth emulator? 9099
+   Which port do you want to use for the functions emulator? 5001
+   Which port do you want to use for the firestore emulator? 8080
+   Which port do you want to use for the hosting emulator? 5000
+   Which port do you want to use for the storage emulator? 9199
+   Would you like to enable the Emulator UI? Yes
+   Which port do you want to use for the Emulator UI (leave empty to use any available port)?
+   Would you like to download the emulators now? yes
+
+firebase init möglichkeiten
+
+- Data Connect: Richte eine Firebase Data Connect-Dienst ein
+  Ist für den inport von vorherigen Versionen von der Firestore Datenbank
+  und dient zu Kompatibilitätszwecke
+- Firestore: Konfiguriere Sicherheitsregeln und Indexdateien für Firestore
+- Genkit: Richte ein neues Genkit-Projekt mit Firebase ein
+- Funktionen: Konfiguriere ein Cloud Functions-Verzeichnis und seine Dateien
+  Bereitstellen und Entwickeln von Cloud Funktionen
+- App-Hosting: Konfiguriere eine apphosting.yaml-Datei für App-Hosting
+- Hosting: Konfiguriere Dateien für Firebase Hosting und richte (optional) die GitHub-Aktion ein
+- Storage: Konfiguriere ein Sicherheitsregeldatei für Cloud Storage
+  Wird verwendet um Daten hochzuladen
+- Emulatoren: Richte einen lokale Emulatoren für das Firebase-Produkte ein
+- Remote Config: Konfiguriere ein Vorlagendatei für Remote Config
+- Erweiterungen: Richte ein leeres Erweiterungsmanifest ein
+- Realtime Datenbank: Konfiguriere eine Sicherheitsregeldatei für die Echtzeitdatenbank (optional)
+
+Erstellte Dateien
+
+- .firebaserc
+- firebase.json
+  Ist die Config Datei vom Emulator
+- firestore.indexes.json
+- firestore.rules
+
+Config und Setting vom Emulator
+environment.ts
+export const environment = {
+...
+useEmulators: true,
+...
+
+app.module.ts
+@NgModule({
+...
+providers: [
+{ provide: USE_AUTH_EMULATOR, useValue: environment.useEmulators ? ['localhost', 9099] : undefined },
+{ provide: USE_FIRESTORE_EMULATOR, useValue: environment.useEmulators ? ['localhost', 8080] : undefined },
+{ provide: USE_FUNCTIONS_EMULATOR, useValue: environment.useEmulators ? ['localhost', 5001] : undefined }
+
+USE_AUTH_EMULATOR
+Der Authentifizierungsemulator wird es uns ermöglichen, vordefinierte Testbenutzer zu haben,
+die verbunden sind mit der Firebase-Datenbank mit unterschiedlichen Rollen,
+wie zum Beispiel einem Administrator, einem normalen Benutzer.
+
+Das bedeutet, dass wir diese Benutzer nicht jedes Mal erstellen müssen, wenn wir diese verschiedenen Typen von Benutzerrollen testen müssen
+
+USE_FUNCTIONS_EMULATOR
+Der Functions-Emulator ermöglichen es uns, Firebase Cloud-Funktionen lokal auszuführen.
+Dadurch wird vermieden, dass wir eine Cloud-Funktion in der Cloud bereitstellen müssen, um sie zu testen.
+
+emulator starten
+firebase emulators:start --only firestore
+Beim start ist die Datenbank leer.
+
+emulator Data export/ import
+firebase emulators:export sample-courses
+firebase emulators:start --import sample-courses
+
+Verzeichnis test-data
+firebase emulators:start --only firestore --import test-data
+
+Wenn man die Daten Verändert und den Emulator neu start werden jetzt die Default Daten von test-data geladen
+
+Vorlage Fehler
+"local-dev": "firebase emulators:start --only firestore,auth,functions --import test-data",
+package.json
+"scripts": {
+...
+firebase emulators:start --only firestore --import test-data
+
+npm run local-dev
+
+firebase emulators:start --only firestore --import test-data

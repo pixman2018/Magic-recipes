@@ -1,0 +1,50 @@
+firebase
+Config
+Test modus
+match /{document=\*\*} {
+allow read, write: if true;
+}
+}
+
+npm i -g firebase-tools
+Firebase tools
+firebase login
+firebase init
+firebase deploy
+
+Firebase hat kein Schema.
+Firestaore ist eine Datenbank, die für die Speicherung von großen Collections mit kleine Documents optimiert ist.
+
+Document
+Ein Document ist die minimale Menga an Daten, die wir aus der DB lesen können.
+Jedes Document hat zwei Eigenschaften:
+
+1. Dokumentenpfad
+   Der Pfad muss relative zum Stamm der Datenbank sein
+2. Eindeutiger Bezeichner (wird automatisch von Firestore erstellt)
+   Bei einer Reactionellen Datenbank wäre der Eindeutiger Bezeichner der Primary Key
+   Der Unterschied ist das der Eindeutiger Bezeichner diekt im Browser mit Firebase SDK generiert wird und das geht sogar offline,
+   so dass sie auf der Client Seite generiert werden, um den Pfad zu einem Document in der Datenbank zu definieren.
+
+Alle Document gehören zu einer Collection, auf der Obersten Ebene
+
+Datentype
+
+- string
+- number
+- boolean
+- map
+- array
+- null
+- timestamp
+  import Timestamp = firebase.firestore.Timestamp;
+- geopoint
+- reference (auf ein Document)
+
+Collection
+Eine Collection ist eine abfragbare Gruppe von Documements.
+Eine Collection kann eine weitere Collection beinhalten.
+Beispiel:
+/courses/11S7rairOVDUYWZDxvOk/lessons/0O5EcwjSznXFdQeQHTnb
+Der courses mit den Key 11S7rairOVDUYWZDxvOk
+Dadrin die Collection lessons mit den Key 0O5EcwjSznXFdQeQHTnb

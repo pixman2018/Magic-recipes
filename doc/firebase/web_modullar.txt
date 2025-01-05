@@ -1,0 +1,29 @@
+firebase
+https://github.com/angular/angularfire/blob/main/docs/version-7-upgrade.md
+
+import {collection, doc, Firestore, setDoc, addDoc } from '@angular/fire/firestore';
+protected firebase = inject(Firestore);
+
+fetch items
+public fetchAll(): Observable<I_Recipe[]> {
+  const recipiesCollection = collection(this.firebase, 'recipies');
+  const recipiesData$ = collectionData(recipiesCollection) as Observable<I_Recipe[]>;
+  recipiesData$
+  return recipiesData$;
+}
+
+CRUD
+Id erstellen
+const recipiesCollection = collection(this._firestore, 'recipies');
+const { id } = doc(recipiesCollection);
+
+add ID übergeben
+const newDocRef = doc(this._firestore, 'recipies', id);
+const ingridientRef = await setDoc(newDocRef, newRecipies);
+
+add automatish generierte ID
+const recipeRef = await addDoc(recipiesCollection, <I_Recipe>newRecipies);
+
+
+
+

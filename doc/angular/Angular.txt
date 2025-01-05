@@ -1,0 +1,290 @@
+Angular
+DOM auflösung erfolgt über zone.js
+
+Signal
+Init schreibbar
+counter = signal(10);
+counter: WritableSignal<number>  = signal(0);
+counter2 = signal<number>(0);
+readonly readOnly3 = signal(0);
+
+Iniut read only
+counter: Signal<number> = signal(0);
+counter = signal(0).asReadonly();
+
+get
+counter()
+Read-Only-Signale
+
+Set
+this.counter.set(this.counter() +1);
+update
+this.counter.update(counter => counter +1);
+
+Signal sind als Standart schreibbar und müssen immer einen Wert haben.
+
+Signal ist in diesem Beispiel, ein Conteainer der eine Zahl umhült.
+Die Ausgabe eines Sinnal erfolgt mit Runden Klammern. "counter()"
+
+Um Den Counter bei jedem Klick zu erhöhen msuu man es folgender Weise schreiben:
+this.counter.set(this.counter() +1);
+
+Variablen
+- leicht zu bedienendes und intuitives Programmiermodell
+- Es gibt keine fortgeschrittenen Konzepte im Spiel hier wie RxJS.
+- Es ist alles sehr einsteigerfreundlich.
+- Sie können eine mit Signalen geschriebene Komponente sehr leicht lesen.
+
+Vorteil
+- Angular wird die Möglich gegeben, genau zu wissen, wann die Daten in einer bestimmten Komponente geändert werden.
+- Angular muss nicht mehr den geammten Componenten-Baum durchsuchen um eine Änderung festzustellen
+- Du hast einen verbesserten Mechanismus zur Erkennung von Änderungen mit weniger Fehlern zur Entwicklungszeit.
+- Die Performance ist vergleichbar mit der von Onpush, man hat ein vereinfachtes Programmiermodell, das dem Ändern von einfachen Member-Variablen wie in Standard, Angular Change Detection, und vor allem Signale ermöglicht
+-  Deine Anwendungen in einem eher deklarativen und reaktiven Stil zu entwickeln.
+
+
+Wenn alle Daten in Signal verpackt sind, muss Angular nur die Signals in eine Art Abo verfolgen und wird dabei
+benachrichtigt wenn sich der Wert eines Signals ändert.
+
+
+
+Signalbasierte Komponente
+signal: true Klammpt bei mir nicht
+
+Signalbasierten Änderungserkennung ist noch nicht verfügbar.
+Später kann man per CLi Migration den Globalen Flag auf true setzrn um eine  Signalbasierten Änderungserkennung zu wechseln
+
+Signal Object
+type Counter = {
+  value: number,
+};
+
+counter = signal<Counter>({
+    value: 100
+});
+
+Update
+falsch ist
+this.counter().value++;
+Erzeugt ein neues Signal Objekt
+
+1. erstelle eine Kopie vom Objekt
+2. erhöhe den Wert
+
+this.counter.update(counter => ({
+    ...counter,
+    value: counter.value + 1,
+}));
+
+Modifiziert das Objekt.
+
+Signal Array
+  values = signal<number[]>([0]);
+
+Falsch
+Man muss sicherstellen, dass die Unveränderbarkeit eines Signal eingahalten wird.
+Hier wird ein neues Value erzeugt
+   append() {
+    const values = this.values();
+    const last = values[values.length -1];
+    values.push(last +1);
+  }
+
+Richtig
+append() {
+        this.values.update(values => ([
+      ...values,
+      values[values.length -1] + 1
+    ]));
+}
+
+Zusammenfassung
+- Signal ist ein Wrapper oder Container über unsere Daten
+- Wir können Angular genau mitteilen, wann die Werte in Signal geändert oder gesetz werden soll
+- Angular muss nicht mehr die ganze Compoennte untersuchen, um herauszubekommen welche Daten geändert werden.
+- Stattdessen weiß Angular genau, welche Daten geändert wurden, denn wir modifizieren sie
+- Angular kennt alle Signale in der Anwendung und weiß, mit welchen Komponenten sie verknüpft sind, so dass
+- Angular weiß also mit Sicherheit, welche Teile der Benutzeroberfläche aktualisiert werden müssen.
+
+Berechnete Signal - computed signals
+- ist nur lesbar
+- Werte können nur durch die modifikation des Source Single erfolgen
+- das automatisch neu berechnet wird, je nach den Werten anderer Quellsignale
+
+  <h3>All Courses: {{ computedSignals() }}</h3>
+
+  <h3>10x: {{ tenXCounter() }}</h3>
+
+  computedSignals = signal(0);
+  tenXCounter = computed(() => {
+    const val = this.computedSignals();
+
+    return val * 10;
+  });
+
+  ingrement() {
+    this.computedSignals.update(val => val +1);
+  }
+
+Man kann sich ein berechnetes Signal also als ein abgeleitetes Signal vorstellen, dessen Wert auf der Grundlage der Werte anderer Signale berechnet wird.
+
+Wenn man die Methode this.hundredXCounter(); manuel einbaut kommt der Fehler
+ERROR Error: Detected cycle in computations.
+
+  tenXCounter = computed(() => {
+    const val = this.computedSignals();
+    this.hundredXCounter();
+    return val * 10;
+  });
+
+  Side Effects
+  Wird mindestens einmal ausgeführt.
+  Sie tun immer dann etawas, wenn  ein Signal seinen
+  Wert ändert.
+  Man sollte sparsam damit umgehen und sie sollten im Contruktor definiert werden.
+
+
+    constructor() {
+
+    effect(() => {
+      console.log(
+        `counter value: ${this.counter()}`
+      );
+    })
+  }
+
+    Anwendunfsbeispiele:
+    - logging
+    - Authentifizierung ein Benutzerprofil in Ihrem lokalen Speicher speichern
+    - ein benutzerdefiniertes Dom-Rendering-Verhalten hinzufügen willst, das nicht wirklich mit einer Vorlage ausgedrückt werden kann
+    - Zustand des Formulars im Hintergrund im lokalen Speicher oder in der Datenbank
+    - Nicht zu empfellen sind effecte bei CRD operationen
+
+    Kontext der Dependency Injection eines Effekts
+    Die Effect Funktion wird beim verlasen der Komponente zerstört. Angular kann die Zerstörung  nur ausführen wenn es die Abhänggkeiten kennt.
+
+Effecte sollten  im Contruktor angelegt werden.
+Angular kerennt dann den Kontext der Dependency Injection und wird sich automatisch um die Bereinigung diesen Effekt kümmern.
+
+manuelle Definition des Dependency Injection Contexts eines Effekts
+
+Ein Effect wird nicht im Constructor sondern im Click Handler definiert. In diesem Fall muss man Angular expliziet sagen wann man den Effekt zerstörren möchte.
+
+injector = inject(Injector);
+ constructor() {
+   afterNextRender(() => {
+       effect(() => {
+         console.log(`counter value: ${this.counter2()}`);
+       }, {
+        injector: this.injector
+       });
+    });
+ }
+
+ Manuellen Effekt
+ Bereinigung manuell vornehmen
+ Das können Du auf folgende Weise tun.
+- Du kannst hier die Rückgabe der Effektfunktion abgreifen (vom Type Effektreferenz).
+
+ constructor() {
+  this.effectRef = effect(() => {
+    console.log(`counter value: ${this.counter2()}`);
+  });
+ }
+
+   cleanup() {
+    this.effectRef?.destroy();
+  }
+
+Mit Callback onCleanup
+constructor(){
+      this.effectRef = effect((onCleanup) => {
+
+      const counter = this.counter2();
+
+          const timeout = setTimeout(() => {
+            console.log(`counter value: ${counter}`);
+          }, 1000);
+
+          onCleanup(() => {
+            console.log(`Calling clean up.`);
+            clearTimeout(timeout);
+          });
+    });
+}
+
+Async Function
+Wenn ein nicht Asynchoner Wert zurückgegeben wird, wird dieser in ein Promise konvertiert.
+
+CRUD mit Signal
+
+Get Request
+Service
+Fetch
+  private _env = environment;
+  private _url = <string>`${this._env.apiRoot}/courses`;
+
+  public async loadAllCourses(): Promise<Course[]> {
+   const response = <Response> await fetch(this._url);
+   const payload = await response.json();
+   return payload.courses ;
+   // or
+  //  return payload.courses as Course[];
+  }
+
+  HttpClient
+  private _http = inject(HttpClient);
+  private _env = environment;
+  private _url = <string>`${this._env.apiRoot}/courses`;
+
+  public async loadAllCourses(): Promise<Course[]> {
+   const courses$ = this._http.get<GetCoursesResponse>(this._url);
+   const response = await firstValueFrom(courses$);
+   return response.courses;
+  }
+
+  Componennt
+    private _courses = signal<Course[]>([]);
+
+    constructor() {
+      this.loadCourses()
+        .then(() => console.log(
+            'All courses loaded.', this._courses()
+          )
+        );
+    }
+    protected async loadCourses(): Promise<void> {
+    try {
+      const courses = await this._coursesService.loadAllCourses();
+      this._courses.set(courses);
+    } catch(error) {
+      alert('Error loading courses!');
+      console.error(error);
+    }
+  }
+
+Trpc HTTP
+https://trpc.io/
+
+Promise
+Promise.reject
+Promise.resolve
+
+Accepting data with input properties
+https://angular.dev/guide/components/inputs
+courses = input.required<Course[]>({
+  alias: 'data'
+  transform:
+});
+  courses = inp
+
+
+resolver
+
+Pipe
+async
+ as picturesUrl
+ erzeugt eine variable wo der Asyncrone Wert gesetz wird
+<ng-container *ngIf="userserService.picturesUrl$ | async as picturesUrl">
+  <img class="user-avatar" [src]="picturesUrl">
+</ng-container>

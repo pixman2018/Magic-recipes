@@ -1,0 +1,9 @@
+catchError( (err: firebase.FirebaseError) => {
+  console.error( err);
+  console.log(`code`, err.code);
+  console.log(`message`, err.message);
+  console.log(`name`, err.name);
+  console.log(`stack`, err.stack);
+  alert('Could not create the course.');
+  return throwError(err);
+}),

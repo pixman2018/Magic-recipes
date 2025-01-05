@@ -1,0 +1,116 @@
+Indexes
+Die Ausführungszeit der Abfrage hängt nur von der Größe der Ergebnismenge ab. Für jedes Feld, das wir im Dokumebt der Collection hinzufügen, erzeugt firestore automatisch ein Index. Wenn wir hier also zehn Felder im Dokument haben, wird Firestore sofort zehn Indizes zu dieser Sammlung hinzufügen.
+
+Beispiel:
+Wir wollen alle Kurse mit einer fortlaufenden Nummer kleiner oder gleich fünf. Und wir wollen auch die Kurse mit einer Stundenanzahl von zehn oder mehr. Wie würde diese Abfrage funktionieren?
+Wir brauchen zwei getrennte Indizes, einen für das Feld „Laufende Nummer“ und einen für das Feld „Anzahl der Stunden“.
+Anzahl. Aber wir haben keinen zusammengesetzten Index, der die beiden Felder enthält.
+
+    this.db
+      .collection("courses", ref => ref
+        .where('seqNo', '<=', 5)
+        .where('lessonsCount', '<=', 10)
+        .orderBy('seqNo')
+      )
+      .get()
+
+
+Fehler:
+FirebaseError: Invalid query. All where filter with an inquality (<, >0, !=, > or >=) must be on the some field. But you have inquality filters on 'seqNo' and 'lessonsCount'.
+FirebaseFehler: Ungültige Abfrage. Alle Where-Filter mit einer Ungleichheit (<, >0, !=, > oder >=) müssen sich auf dasselbe Feld beziehen. Aber Sie haben ungleiche Filter für „seqNo“ und „lessonsCount“.
+this.db
+.collection("courses", ref => ref
+.where('seqNo', '<=', 20)
+.where('url', '==', 'angular-forms-course')
+.orderBy('seqNo')
+)
+.get()
+Bei der ersten Ausführung kommt es zum Fehler:
+The query requires an index. You can create it here
+
+Erklärung
+Firebase erstellt für jedes Dokumentenfeld ein Index aber er erstellt nicht für jedes Feldpaar ein index. Diese werden nur bei Bedarf perm Hand erstellt.
+
+Zusammenfassung:
+
+- firestore erstelt für jedes Dokumenten-Feld ein Index
+- Wenn wir auf mehere Flder zugreifenwollen, müssen wird manuell einen zusammengesetzen Index erstellen
+- firestore stellt sicher, das jede Abfrage die wir an die Datenbank richten, von einen Index unterstützt wird.
+
+Bist du der Meinung, dass du ein Feld nicht Indexieren möchtest, z.B. Leistungsprobleme., dann kannst du für dieses Feld eine Ausnahme festlegen.
+
+Collection Group
+Laded aus allen Main Collections die lessons Collection mit 'seqNo', '==', 1)
+
+this.db.collectionGroup('lessons', ref => ref.where('seqNo', '==', 1))
+
+ERROR FirebaseError: The query requires a COLLECTION_GROUP_ASC index for collection lessons and field seqNo. You can create it here:
+
+Eine Colletion Grpup abfrage benötigt einen eigenen seperaten Index.
+
+get()
+
+- Holt einen Snapshot von Den aktuellen Szand der Daten als Observable.
+- Wenn die Daten geändert werden die Daten vom Observable nicht aktualisiert
+
+reactiver Snapshot
+.snapshotChanges()
+Ladet die Daten bei einer Änderung neu, und gibt einen Snapshot zurück.
+Funktioniert bei Document und Collection.
+this.db
+.doc("/courses/11S7rairOVDUYWZDxvOk")
+.snapshotChanges()
+.subscribe((snap) => {
+console.log(snap.id);
+console.log(snap.data());
+});
+
+valueChanges()
+Gibt keinen Snapshot sodern die Daten selbst zurück.
+Ladet die Daten bei einer Änderung neu, und gibt die Daten zurück.
+this.db
+.doc("/courses/11S7rairOVDUYWZDxvOk")
+.valueChanges()
+.subscribe((course) => {
+console.log(course);
+});
+
+get() Observable
+
+- gibt einen Snapshot zurück
+- ist ein Kurzlebender Observable
+- er holt die Werte und wird sofort beendet
+- Obserable wird nicht abgeschlossen
+
+snapshotChanges() Observable
+valueChanges() Observable
+
+- ist ein langlebender Observable
+- er wird ständig ausgeführt und ladet immer die neuen Werte aus der Datenbank
+- Obserable wird nicht abgeschlossen
+- Es ist wichtig diesen Observable abzuschleißen (z.B. take RXJS Operator oder first Operator)
+  Der first Operator wirft einen Fehler wenn er keinen Wert zurückliefert wenn der Observable abgeschlossen ist.
+
+get()
+snapshotChanges()
+
+- gibt einen Snapshot zurück
+
+  this.db
+  .doc("/courses/11S7rairOVDUYWZDxvOk")
+  .valueChanges()
+  .pipe(
+  take(1)
+  )
+  ist genauso wie
+  this.db
+  .doc("/courses/11S7rairOVDUYWZDxvOk")
+  .get();
+
+  this.db
+  .doc("/courses/11S7rairOVDUYWZDxvOk")
+  .valueChanges()
+  .pipe(
+  first()
+  )
+  Der first Operator wirft einen Fehler wenn er keinen Wert zurückliefert wenn der Observable abgeschlossen ist.
