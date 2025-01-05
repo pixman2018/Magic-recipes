@@ -28,7 +28,7 @@ export const RECIPIES: I_Recipe[] = [
       'Eine Springform (26cm) mit Backpapier auslegen und die Massen hineingeben. Die gefrorenen Beeren darauf verteilen.',
       'Auf mittlerer Schiene 25 - 30 Minuten backen. Auskühlen lassen und servieren.'
     ],
-    belonging: ['schüssel', 'springform', 'backpapier'],
+    materials: ['schüssel', 'springform', 'backpapier'],
 
   },
   {
@@ -57,7 +57,7 @@ export const RECIPIES: I_Recipe[] = [
       'Gegarte Kartoffeln vierteln und zusammen mit Salat, Gurke und Zwiebeln in eine Schüssel geben.',
       'Dressing aus den genannten Zutaten plus einem Schuss Gurkenwasser der Cornichons zusammenrühren, mit Salz und Pfeffer abschmecken. Zum Salat geben, untermengen, abkühlen und durchziehen lassen. Mit Kräutern nach Wahl (wir nehmen Schnittlauch) und gekochten Eier-Stückchen (Eier vierteln) toppen.'
     ],
-    belonging: [],
+    materials: [],
   },
   {
     id: '3',
@@ -86,7 +86,7 @@ export const RECIPIES: I_Recipe[] = [
       'Das Gemüse (bis auf den Spinat) unterheben und etwa 10 Minuten köcheln lassen, sodass es weich ist, aber ruhig noch etwas Biss hat. Dann erst den Spinat unterheben, der sofort in sich zusammenfallen wird. ',
       'Tofu nun ganz am Ende dazu geben und Curry mit Sojasoße und Limette abschmecken. Optional mit Sambal Oelek würzen. '
     ],
-    belonging: ['pfanne'],
+    materials: ['pfanne'],
   },
   {
   id: '4',
@@ -113,6 +113,6 @@ export const RECIPIES: I_Recipe[] = [
       'Teig portionsweise in der Pfanne zu kleinen goldbraunen Pancakes ausbacken.',
       'Mit Heidelbeeren (oder anderen Früchten) nach Wahl toppen.'
     ],
-    belonging: ['pfanne'],
+    materials: ['pfanne'],
   }
 ]

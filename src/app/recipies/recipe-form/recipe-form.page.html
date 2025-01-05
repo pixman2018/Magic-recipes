@@ -1,0 +1,409 @@
+<!-- <app-basis-layout headline="Neues Rezept"> -->
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      @if(modus == 'created') {
+      Neues Rezept
+      }
+      @if(modus == 'edit') {
+      Rezept bearbeiten
+      }
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+
+
+        <form [formGroup]="recipeForm">
+          <ion-row>
+            <ion-col>
+              <ion-item fill="fill">
+                <ion-input type="text" label="Titel" aria-label="Titel" labelPlacement="floating"
+                  formControlName="title" [clearInput]="true">
+                </ion-input>
+              </ion-item>
+
+
+              <!--
+               {{ getFormCtrl('title')?.errors | json }}
+            Error Message
+          -->
+              <!-- <div class="error-msg" *ngIf="nameCtrl?.invalid  &&  isSubmit">
+          <ion-text color="danger" *ngIf="nameCtrl?.hasError('required')">
+            Bitte gebe dein Workout einen Namen.
+          </ion-text>
+        </div> -->
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-item fill="fill">
+                <ion-textarea label="Schlüsselwörter" aria-label="Schlüsselwörter" labelPlacement="floating"
+                  formControlName="keywords">
+                </ion-textarea>
+              </ion-item>
+              <!--
+            Error Message
+          -->
+              <!-- <div class="error-msg" *ngIf="nameCtrl?.invalid  &&  isSubmit">
+          <ion-text color="danger" *ngIf="nameCtrl?.hasError('required')">
+            Bitte gebe dein Workout einen Namen.
+          </ion-text>
+        </div> -->
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-item fill="fill">
+                <ion-input type="text" label="Portionen" aria-label="Portionen" labelPlacement="floating"
+                  formControlName="portions" [clearInput]="true">
+                </ion-input>
+              </ion-item>
+
+
+              <!--
+               {{ getFormCtrl('title')?.errors | json }}
+            Error Message
+          -->
+              <!-- <div class="error-msg" *ngIf="nameCtrl?.invalid  &&  isSubmit">
+          <ion-text color="danger" *ngIf="nameCtrl?.hasError('required')">
+            Bitte gebe dein Workout einen Namen.
+          </ion-text>
+        </div> -->
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-item fill="fill">
+                <ion-textarea label="Beschreibung" aria-label="Beschreibung" labelPlacement="floating"
+                  formControlName="description">
+                </ion-textarea>
+              </ion-item>
+              <!--
+            Error Message
+          -->
+              <!-- <div class="error-msg" *ngIf="nameCtrl?.invalid  &&  isSubmit">
+          <ion-text color="danger" *ngIf="nameCtrl?.hasError('required')">
+            Bitte gebe dein Workout einen Namen.
+          </ion-text>
+        </div> -->
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-item fill="fill">
+                <ion-input type="text" label="Bild" aria-label="Bild" labelPlacement="floating"
+                  formControlName="coverUrl" [clearInput]="true">
+                </ion-input>
+              </ion-item>
+              <!--
+            Error Message
+          -->
+              <!-- <div class="error-msg" *ngIf="nameCtrl?.invalid  &&  isSubmit">
+          <ion-text color="danger" *ngIf="nameCtrl?.hasError('required')">
+            Bitte gebe dein Workout einen Namen.
+          </ion-text>
+        </div> -->
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-item fill="fill">
+                <ion-input type="number" label="Kochzeit" aria-label="Kochzeit" labelPlacement="floating"
+                  formControlName="cookingTime" [clearInput]="true">
+                </ion-input>
+              </ion-item>
+              <!--
+            Error Message
+          -->
+              <!-- <div class="error-msg" *ngIf="nameCtrl?.invalid  &&  isSubmit">
+          <ion-text color="danger" *ngIf="nameCtrl?.hasError('required')">
+            Bitte gebe dein Workout einen Namen.
+          </ion-text>
+        </div> -->
+            </ion-col>
+            <ion-col>
+              <ion-item fill="fill">
+                <ion-input type="number" label="Vorbereitungszeit" aria-label="Vorbereitungszeit"
+                  labelPlacement="floating" formControlName="preparationTime" [clearInput]="true">
+                </ion-input>
+              </ion-item>
+              <!--
+            Error Message
+          -->
+              <!-- <div class="error-msg" *ngIf="nameCtrl?.invalid  &&  isSubmit">
+          <ion-text color="danger" *ngIf="nameCtrl?.hasError('required')">
+            Bitte gebe dein Workout einen Namen.
+          </ion-text>
+        </div> -->
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-item fill="fill">
+                <ion-input type="number" label="Schwierigkeitsgrad" aria-label="Schwierigkeitsgrad"
+                  labelPlacement="floating" formControlName="degreeOfDifficulty" [clearInput]="true">
+                </ion-input>
+              </ion-item>
+              <!--
+            Error Message
+          -->
+              <!-- <div class="error-msg" *ngIf="nameCtrl?.invalid  &&  isSubmit">
+          <ion-text color="danger" *ngIf="nameCtrl?.hasError('required')">
+            Bitte gebe dein Workout einen Namen.
+          </ion-text>
+        </div> -->
+            </ion-col>
+
+            <ion-col>
+              <ion-item fill="fill">
+                <ion-input type="number" label="Muskelaufbaufaktor" aria-label="Muskelaufbaufaktor"
+                  labelPlacement="floating" formControlName="muscleBuildingFactor" [clearInput]="true">
+                </ion-input>
+              </ion-item>
+              <!--
+            Error Message
+          -->
+              <!-- <div class="error-msg" *ngIf="nameCtrl?.invalid  &&  isSubmit">
+          <ion-text color="danger" *ngIf="nameCtrl?.hasError('required')">
+            Bitte gebe dein Workout einen Namen.
+          </ion-text>
+        </div> -->
+            </ion-col>
+
+            <ion-col>
+              <ion-item fill="fill">
+                <ion-input type="number" label="Gewichtsverlustfaktor" aria-label="Gewichtsverlustfaktor"
+                  labelPlacement="floating" formControlName="weightLossFactor" [clearInput]="true">
+                </ion-input>
+              </ion-item>
+              <!--
+            Error Message
+          -->
+              <!-- <div class="error-msg" *ngIf="nameCtrl?.invalid  &&  isSubmit">
+          <ion-text color="danger" *ngIf="nameCtrl?.hasError('required')">
+            Bitte gebe dein Workout einen Namen.
+          </ion-text>
+        </div> -->
+            </ion-col>
+          </ion-row>
+
+          <div class="" formGroupName="nutritionalValue">
+            <ion-row>
+              <ion-col>
+                <ion-item fill="fill">
+                  <ion-input type="number" label="Kalorien (kcal)" aria-label="Kalorien (kcal)"
+                    labelPlacement="floating" formControlName="calories" [clearInput]="true">
+                  </ion-input>
+                </ion-item>
+                <!--
+              Error Message
+            -->
+                <!-- <div class="error-msg" *ngIf="nameCtrl?.invalid  &&  isSubmit">
+            <ion-text color="danger" *ngIf="nameCtrl?.hasError('required')">
+              Bitte gebe dein Workout einen Namen.
+            </ion-text>
+          </div> -->
+              </ion-col>
+
+              <ion-col>
+                <ion-item fill="fill">
+                  <ion-input type="number" label="Eiweiß" aria-label="Eiweiß" labelPlacement="floating"
+                    formControlName="portien" [clearInput]="true">
+                  </ion-input>
+                </ion-item>
+                <!--
+              Error Message
+            -->
+                <!-- <div class="error-msg" *ngIf="nameCtrl?.invalid  &&  isSubmit">
+            <ion-text color="danger" *ngIf="nameCtrl?.hasError('required')">
+              Bitte gebe dein Workout einen Namen.
+            </ion-text>
+          </div> -->
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col>
+                <ion-item fill="fill">
+                  <ion-input type="number" label="Kohlenhydrate" aria-label="Kohlenhydrate" labelPlacement="floating"
+                    formControlName="carbohydrates" [clearInput]="true">
+                  </ion-input>
+                </ion-item>
+                <!--
+              Error Message
+            -->
+                <!-- <div class="error-msg" *ngIf="nameCtrl?.invalid  &&  isSubmit">
+            <ion-text color="danger" *ngIf="nameCtrl?.hasError('required')">
+              Bitte gebe dein Workout einen Namen.
+            </ion-text>
+          </div> -->
+              </ion-col>
+
+              <ion-col>
+                <ion-item fill="fill">
+                  <ion-input type="number" label="Fett" aria-label="Fett" labelPlacement="floating"
+                    formControlName="fats" [clearInput]="true">
+                  </ion-input>
+                </ion-item>
+                <!--
+              Error Message
+            -->
+                <!-- <div class="error-msg" *ngIf="nameCtrl?.invalid  &&  isSubmit">
+            <ion-text color="danger" *ngIf="nameCtrl?.hasError('required')">
+              Bitte gebe dein Workout einen Namen.
+            </ion-text>
+          </div> -->
+              </ion-col>
+            </ion-row>
+          </div>
+
+          <ion-row>
+            <ion-col>
+              <ion-item fill="fill">
+                <ion-select aria-label="Kategorie" label="Kategorie" labelPlacement="floating" [multiple]="true"
+                  formControlName="categoryIds">
+                  @for( category of categoriesData; track category; let index = $index) {
+                  <ion-select-option [value]="index">
+                    {{ category.de | ucfirst }}
+                  </ion-select-option>
+                  }
+                </ion-select>
+
+              </ion-item>
+              <!--
+            Error Message
+          -->
+              <!-- <div class="error-msg" *ngIf="nameCtrl?.invalid  &&  isSubmit">
+          <ion-text color="danger" *ngIf="nameCtrl?.hasError('required')">
+            Bitte gebe dein Workout einen Namen.
+          </ion-text>
+        </div> -->
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-item fill="fill">
+                <ion-input type="text" label="Materialien" aria-label="Materialien" labelPlacement="floating"
+                  formControlName="materials" [clearInput]="true">
+                </ion-input>
+              </ion-item>
+
+
+              <!--
+               {{ getFormCtrl('title')?.errors | json }}
+            Error Message
+          -->
+              <!-- <div class="error-msg" *ngIf="nameCtrl?.invalid  &&  isSubmit">
+          <ion-text color="danger" *ngIf="nameCtrl?.hasError('required')">
+            Bitte gebe dein Workout einen Namen.
+          </ion-text>
+        </div> -->
+            </ion-col>
+          </ion-row>
+
+
+          <div formArrayName="ingidients">
+            <div class="form-action-control">
+              <ion-buttons>
+                <ion-title>Zutaten</ion-title>
+                <ion-button color="primary" (click)="addIngridient()">
+                  <ion-icon slot="icon-only" name="add"></ion-icon>
+                </ion-button>
+                <ion-button color="danger" (click)="delIngridient()">
+                  <ion-icon slot="icon-only" name="close"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </div>
+            @for (result of ingridientControls.controls; track result; let index = $index){
+            <div [formGroupName]="index" class="ingridients-container">
+              <ion-row>
+                <ion-col>
+                  <ion-item fill="fill">
+                    <ion-input type="number" label="Anzahl" aria-label="Anzahl" labelPlacement="floating"
+                      formControlName="number" [clearInput]="true">
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+
+                <ion-col>
+                  <ion-item fill="fill">
+                    <ion-select aria-label="Maßeinheit" label="Maßeinheit" labelPlacement="floating" [multiple]="false"
+                      formControlName="measurement">
+                      @for( measurement of measurementsData; track measurement; let index = $index) {
+                      <ion-select-option [value]="measurement">
+                        {{ measurement | ucfirst }}
+                      </ion-select-option>
+                      }
+                    </ion-select>
+                  </ion-item>
+                </ion-col>
+
+                <ion-col>
+                  <ion-item fill="fill">
+                    <ion-input type="text" label="Zutat" aria-label="Zutat" labelPlacement="floating"
+                      formControlName="ingridient" [clearInput]="true">
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </div>
+            }
+          </div>
+
+          <div formArrayName="steps">
+            <div class="form-action-control">
+              <ion-buttons>
+                <ion-title>Schritte</ion-title>
+                <ion-button color="primary" (click)="addStep()">
+                  <ion-icon slot="icon-only" name="add"></ion-icon>
+                </ion-button>
+                <ion-button color="danger" (click)="delStep()">
+                  <ion-icon slot="icon-only" name="close"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </div>
+            @for (result of stepsControls.controls; track result; let i = $index){
+            <div [formGroupName]="i" class="steps-container">
+              <ion-row>
+
+                <ion-col>
+                  <ion-item fill="fill">
+                    <ion-input type="text" label="Schritt" aria-label="Schritt" labelPlacement="floating"
+                      formControlName="step" [clearInput]="true">
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </div>
+            }
+          </div>
+
+          <ion-row>
+            <ion-button (click)="onSubmit()">
+              @if(modus == 'created') {
+              Hinzufügen
+              }
+              @if(modus == 'edit') {
+              Bearbeitet
+              }
+            </ion-button>
+          </ion-row>
+
+        </form>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+<!-- </app-basis-layout> -->
