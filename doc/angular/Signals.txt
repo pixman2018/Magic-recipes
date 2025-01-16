@@ -288,3 +288,75 @@ async
 <ng-container *ngIf="userserService.picturesUrl$ | async as picturesUrl">
   <img class="user-avatar" [src]="picturesUrl">
 </ng-container>
+
+
+label = input.required<string>();
+
+output Binding mit Signals
+courseUpdated = output<Course>();
+
+2-Way Databinding mit Signals
+https://v17.angular.io/guide/model-inputs
+
+value = model.required<CourseCategory>();
+So weit wie möglich sollte man eine ein-Weg Binding vorzuziehen.
+Beispiele für das "Signal model" ist
+- Formularkomponenten
+- DAtumsauswahl
+
+ViewChild und ViewChilden
+ViewChild mit Signals kann Typensicher gesetzt werden. Dies erfolgt über den Typin (CoursesCardListComponent).
+Wird dieser Typin nicht gesetzt, kann das Value vom ViewChild auch "undefined" oder 'unknow' sein.
+Beispiel:
+beginnersList = viewChild<CoursesCardListComponent>('beginnersList');
+
+as Verhalten ist identisch mit dem vom @ViewChild.
+
+Leseparameter
+Setzt man wenn man nicht vorhat die Kommponente selber zu erhalten, sondern den Element Referenze.
+ Beispiel:
+ beginnersList = viewChild('beginnersList', {
+    read: ElementRef,
+});
+
+Eine Instanz vom Material Tooltip laden
+beginnersList = viewChild('beginnersList', {
+  read: MatTooltip,
+});
+
+Man kann mit der Signal Variante vom ViewChild alles aus dem DOM auslesen.
+
+content projection Content-Child and Content-Children
+Ermöglicht das Erstellen von konfigurierbaren und wiederverwendbaren Kommpunenten zu erstellen.
+Beispiel:
+
+<course-category-combobox
+    label="Course category"
+    [(value)]="category"
+>
+    <div class="title">
+      Course category (via content projection)
+    </div>
+  </course-category-combobox>
+
+course-category-combobox Page
+<ng-content select=".title"></ng-content>
+
+Signal ContentChild und ContentChildren
+  <course-category-combobox
+    label="Course category"
+    [(value)]="category"
+  >
+    <div class="title" #title>
+      Course category (via content projection)
+    </div>
+  </course-category-combobox>
+
+CourseCategoryComboboxComponent
+title = contentChild<ElementRef>('title');
+
+ContentChild greift auf die Referenze Varaible zu.
+
+ContentChildren
+titles = contentChildren<ElementRef>('title');
+

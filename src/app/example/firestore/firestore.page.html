@@ -1,0 +1,47 @@
+<app-basis-layout headline="Firestore">
+  <ion-row>
+    <ion-col>
+      <ion-title>
+        Storage
+      </ion-title>
+    </ion-col>
+  </ion-row>
+
+  @if (iconUrl()) {
+  <ion-row>
+    <ion-col>
+      <img class="thumbneil" [src]="iconUrl()" alt="">
+    </ion-col>
+  </ion-row>
+  }
+
+  <!-- <ion-row>
+    <ion-col>
+      <ion-item fill="fill" class="upload-container">
+        <h3>Upload Multifile</h3>
+        <label for="fileUpload">Datei auswählen</label>
+        <input type="file" id="fileUpload" #upload multiple>
+        <ion-button class="ion-margin-start" color="" (click)="onUploadThumbnail(upload)">Upload</ion-button>
+      </ion-item>
+    </ion-col>
+  </ion-row> -->
+
+  <ion-row>
+    <ion-col>
+      <h3>Upload</h3>
+      <input type="file" (change)="onUploadThumbnail($event)">
+    </ion-col>
+
+  </ion-row >
+  progressNo {{ progressNo() }}
+  @if (progressNo()) {
+  <ion-row class="upload-progress">
+    <ion-col size="8">
+      <ion-progress-bar type="determinate" [value]="progressNo()" class="progress-bar"></ion-progress-bar>
+    </ion-col>
+    <ion-col size="4">
+      <ion-text color="primary">{{ progressNo() / 100| percent }}</ion-text>
+    </ion-col>
+  </ion-row>
+  }
+</app-basis-layout>

@@ -118,3 +118,27 @@ Collection Group Query
 match /{path=**}/lessons/{lessonsId} {
   allow read: if isKnownUser();
 }
+
+DAtum begrenzen
+request.time < timestamp.date(2025, 1, 6);
+
+Storage role
+ match /{allPaths=**} {
+      allow read, write: if true;
+}
+Matcht alle Pfade
+service firebase.storage {
+  match /b/{bucket}/o {
+   match /courses/{coursesId}/{fieldName} {
+
+    allow read;
+    allow write: if request.auth != null &&
+      request.resource.size < 5 * 1024 * 1024;
+
+   }
+  }
+}
+User muss angemeldet sein und die Datei darf nicht größer als 5MB sein
+
+Role Einstellungen vom Emulator Online bereitstellen
+firebase deploy --only storage

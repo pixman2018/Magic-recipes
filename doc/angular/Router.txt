@@ -1,0 +1,28 @@
+Router
+
+Resolver
+Ermöglicht das Bereitstellen von Daten beim laden der Componente.
+Damit werden die Daten der zu ladenen Componente so früh wie möglich zur Verfügung gestellt.
+
+Besipiel
+course.resolver.ts
+export const courseReslover: ResolveFn<Course | null> = async (
+  route: ActivatedRouteSnapshot,
+  state: RouterStateSnapshot
+) => {
+  const courseId = route.paramMap.get('courseId');
+  if (!courseId) {
+    return null;
+  }
+
+  const coursesService = inject(CoursesServiceWithHttpClient);
+  return coursesService.getById(courseId);
+};
+
+app.router.ts
+  resolve: {
+    course: courseReslover,
+  },
+
+Details Component
+this.course.set(this._route.snapshot.data['course']);

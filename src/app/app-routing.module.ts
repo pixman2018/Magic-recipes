@@ -17,15 +17,19 @@ const routes: Routes = [
   },
   {
     path: 'recipies-list',
-    loadChildren: () => import('./recipies/recipies-list/recipies-list.module').then( m => m.RecipiesListPageModule)
+    loadChildren: () => import('./recipes/recipes-list/recipes-list.module').then( m => m.RecipiesListPageModule)
   },
   {
     path: 'recipe/:recipeId',
-    loadChildren: () => import('./recipies/recipe/recipe.module').then( m => m.RecipePageModule)
+    loadChildren: () => import('./recipes/recipe/recipe.module').then( m => m.RecipePageModule)
   },
   {
     path: 'recipe-form',
-    loadChildren: () => import('./recipies/recipe-form/recipe-form.module').then( m => m.RecipeFormPageModule)
+    loadChildren: () => import('./recipes/recipe-form/recipe-form.module').then( m => m.RecipeFormPageModule)
+  },
+  {
+    path: 'firestore',
+    loadChildren: () => import('./example/firestore/firestore.module').then( m => m.FirestorePageModule)
   },
 
 ];
