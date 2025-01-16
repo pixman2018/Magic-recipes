@@ -1,0 +1,395 @@
+<!-- <app-basis-layout headline="Neues Rezept"> -->
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      @if(modus == 'created') {
+      Neues Rezept
+      }
+      @if(modus == 'edit') {
+      Rezept bearbeiten
+      }
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+
+
+        <form [formGroup]="recipeForm">
+          <ion-row>
+            <ion-col>
+              <ion-item fill="fill">
+                <ion-input type="text" label="Titel" aria-label="Titel" labelPlacement="floating"
+                  formControlName="title" [clearInput]="true">
+                </ion-input>
+              </ion-item>
+
+
+              <!--
+              Error Message
+               -->
+              <div class="error-msg" *ngIf="getFormCtrl('title')?.invalid  &&  getFormCtrl('title')?.touched">
+                <ion-text color="danger" *ngIf="getFormCtrl('title')?.hasError('required')">
+                  Bitte gebe den Titel ein.
+                </ion-text>
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-item fill="fill">
+                <ion-textarea label="Beschreibung" aria-label="Beschreibung" labelPlacement="floating"
+                  formControlName="description">
+                </ion-textarea>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-item fill="fill">
+                <ion-textarea label="Schlüsselwörter" aria-label="Schlüsselwörter" labelPlacement="floating"
+                  formControlName="keywords">
+                </ion-textarea>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-item fill="fill">
+                <ion-input type="number" label="Portionen" aria-label="Portionen" labelPlacement="floating"
+                  formControlName="portions" [clearInput]="true">
+                </ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-item fill="fill">
+                <ion-input type="text" label="Bild" aria-label="Bild" labelPlacement="floating"
+                  formControlName="coverUrl" [clearInput]="true">
+                </ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-item fill="fill">
+                <ion-input type="number" label="Kochzeit" aria-label="Kochzeit" labelPlacement="floating"
+                  formControlName="cookingTime" [clearInput]="true">
+                </ion-input>
+              </ion-item>
+              <!--
+            Error Message
+          -->
+              <div class="error-msg"
+                *ngIf="getFormCtrl('cookingTime')?.invalid  &&  getFormCtrl('cookingTime')?.touched">
+                <ion-text color="danger" *ngIf="getFormCtrl('cookingTime')?.hasError('required')">
+                  Bitte gebe die Kochzeit an.
+                </ion-text>
+              </div>
+            </ion-col>
+            <ion-col>
+              <ion-item fill="fill">
+                <ion-input type="number" label="Vorbereitungszeit" aria-label="Vorbereitungszeit"
+                  labelPlacement="floating" formControlName="preparationTime" [clearInput]="true">
+                </ion-input>
+              </ion-item>
+              <!--
+              Error Message
+              -->
+              <div class="error-msg"
+                *ngIf="getFormCtrl('preparationTime')?.invalid  &&  getFormCtrl('preparationTime')?.touched">
+                <ion-text color="danger" *ngIf="getFormCtrl('preparationTime')?.hasError('required')">
+                  Bitte gebe die Vorbereitungszeit an.
+                </ion-text>
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-item fill="fill">
+                <ion-input type="number" label="Schwierigkeitsgrad" aria-label="Schwierigkeitsgrad"
+                  labelPlacement="floating" formControlName="degreeOfDifficulty" [clearInput]="true">
+                </ion-input>
+              </ion-item>
+              <!--
+              Error Message
+              -->
+              <div class="error-msg"
+                *ngIf="getFormCtrl('degreeOfDifficulty')?.invalid  &&  getFormCtrl('degreeOfDifficulty')?.touched">
+                <ion-text color="danger" *ngIf="getFormCtrl('degreeOfDifficulty')?.hasError('required')">
+                  Bitte gebe den Schwierigkeitsgrad an.
+                </ion-text>
+              </div>
+            </ion-col>
+
+            <ion-col>
+              <ion-item fill="fill">
+                <ion-input type="number" label="Muskelaufbaufaktor" aria-label="Muskelaufbaufaktor"
+                  labelPlacement="floating" formControlName="muscleBuildingFactor" [clearInput]="true">
+                </ion-input>
+              </ion-item>
+              <!--
+              Error Message
+              -->
+              <div class="error-msg"
+                *ngIf="getFormCtrl('muscleBuildingFactor')?.invalid  &&  getFormCtrl('muscleBuildingFactor')?.touched">
+                <ion-text color="danger" *ngIf="getFormCtrl('muscleBuildingFactor')?.hasError('required')">
+                  Bitte gebe den Muskelaufbau Faktor an.
+                </ion-text>
+              </div>
+            </ion-col>
+
+            <ion-col>
+              <ion-item fill="fill">
+                <ion-input type="number" label="Gewichtsverlustfaktor" aria-label="Gewichtsverlustfaktor"
+                  labelPlacement="floating" formControlName="weightLossFactor" [clearInput]="true">
+                </ion-input>
+              </ion-item>
+              <!--
+                Error Message
+              -->
+              <div class="error-msg"
+                *ngIf="getFormCtrl('weightLossFactor')?.invalid  &&  getFormCtrl('weightLossFactor')?.touched">
+                <ion-text color="danger" *ngIf="getFormCtrl('weightLossFactor')?.hasError('required')">
+                  Bitte gebe den Abnehm Gewichtsverlust Faktor an.
+                </ion-text>
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <div class="" formGroupName="nutritionalValue">
+            <ion-row>
+              <ion-col>
+                <ion-item fill="fill">
+                  <ion-input type="number" label="Kalorien (kcal)" aria-label="Kalorien (kcal)"
+                    labelPlacement="floating" formControlName="calories" [clearInput]="true">
+                  </ion-input>
+                </ion-item>
+                <!--
+                Error Message
+                -->
+                <div class="error-msg" *ngIf="getFormCtrl('nutritionalValue.calories')?.invalid  &&  getFormCtrl('nutritionalValue.calories')?.touched">
+                  <ion-text color="danger" *ngIf="getFormCtrl('nutritionalValue.calories')?.hasError('required')">
+                    Bitte gebe die Kalorien an.
+                  </ion-text>
+                </div>
+              </ion-col>
+
+              <ion-col>
+                <ion-item fill="fill">
+                  <ion-input type="number" label="Eiweiß" aria-label="Eiweiß" labelPlacement="floating"
+                    formControlName="portien" [clearInput]="true">
+                  </ion-input>
+                </ion-item>
+                <!--
+                Error Message
+                -->
+                <div class="error-msg" *ngIf="getFormCtrl('nutritionalValue.portien')?.invalid  &&  getFormCtrl('nutritionalValue.portien')?.touched">
+                  <ion-text color="danger" *ngIf="getFormCtrl('nutritionalValue.portien')?.hasError('required')">
+                    Bitte gebe die Proteine an.
+                  </ion-text>
+                </div>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col>
+                <ion-item fill="fill">
+                  <ion-input type="number" label="Kohlenhydrate" aria-label="Kohlenhydrate" labelPlacement="floating"
+                    formControlName="carbohydrates" [clearInput]="true">
+                  </ion-input>
+                </ion-item>
+                <!--
+                Error Message
+                -->
+                <div class="error-msg"
+                  *ngIf="getFormCtrl('nutritionalValue.carbohydrates')?.invalid  &&  getFormCtrl('nutritionalValue.carbohydrates')?.touched">
+                  <ion-text color="danger" *ngIf="getFormCtrl('nutritionalValue.carbohydrates')?.hasError('required')">
+                    Bitte gebe die Kohlenhydrate an.
+                  </ion-text>
+                </div>
+              </ion-col>
+
+              <ion-col>
+                <ion-item fill="fill">
+                  <ion-input type="number" label="Fett" aria-label="Fett" labelPlacement="floating"
+                    formControlName="fats" [clearInput]="true">
+                  </ion-input>
+                </ion-item>
+                <!--
+              Error Message
+            -->
+                <div class="error-msg" *ngIf="getFormCtrl('nutritionalValue.fats')?.invalid  &&  getFormCtrl('nutritionalValue.fats')?.touched">
+                  <ion-text color="danger" *ngIf="getFormCtrl('nutritionalValue.fats')?.hasError('required')">
+                    Bitte gebe den Fettgehalt an.
+                  </ion-text>
+                </div>
+              </ion-col>
+            </ion-row>
+          </div>
+
+          <ion-row>
+            <ion-col>
+              <ion-item fill="fill">
+                <ion-select aria-label="Kategorie" label="Kategorie" labelPlacement="floating" [multiple]="true"
+                  formControlName="categoryIds">
+                  @for( category of categoriesData; track category; let index = $index) {
+                  <ion-select-option [value]="index">
+                    {{ category.de | ucfirst }}
+                  </ion-select-option>
+                  }
+                </ion-select>
+
+              </ion-item>
+              <!--
+            Error Message
+          -->
+          <div class="error-msg" *ngIf="getFormCtrl('categoryIds')?.invalid  &&  getFormCtrl('categoryIds')?.touched">
+            <ion-text color="danger" *ngIf="getFormCtrl('categoryIds')?.hasError('required')">
+              Bitte gebe die Kategorie an.
+            </ion-text>
+          </div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-item fill="fill">
+                <ion-input type="text" label="Materialien" aria-label="Materialien" labelPlacement="floating"
+                  formControlName="materials" [clearInput]="true">
+                </ion-input>
+              </ion-item>
+
+            </ion-col>
+          </ion-row>
+
+          <div formArrayName="ingidients">
+            <div class="form-action-control">
+              <ion-buttons>
+                <ion-title>Zutaten</ion-title>
+                <ion-button color="primary" (click)="addIngridient()">
+                  <ion-icon slot="icon-only" name="add"></ion-icon>
+                </ion-button>
+                <ion-button color="danger" (click)="delIngridient()">
+                  <ion-icon slot="icon-only" name="close"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </div>
+            @for (result of ingridientControls.controls; track result; let index = $index){
+            <div [formGroupName]="index" class="ingridients-container">
+              <ion-row>
+                <ion-col>
+                  <ion-item fill="fill">
+                    <ion-input type="number" label="Anzahl" aria-label="Anzahl" labelPlacement="floating"
+                      formControlName="number" [clearInput]="true">
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+
+                <ion-col>
+                  <ion-item fill="fill">
+                    <ion-select aria-label="Maßeinheit" label="Maßeinheit" labelPlacement="floating" [multiple]="false"
+                      formControlName="measurement">
+                      @for( measurement of measurementsData; track measurement; let index = $index) {
+                      <ion-select-option [value]="measurement">
+                        {{ measurement }}
+                      </ion-select-option>
+                      }
+                    </ion-select>
+                  </ion-item>
+                </ion-col>
+
+                <ion-col>
+                  <ion-item fill="fill">
+                    <ion-input type="text" label="Zutat" aria-label="Zutat" labelPlacement="floating"
+                      formControlName="ingridient" [clearInput]="true">
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+
+
+                <ion-col>
+                  <div class="error-msg" *ngIf=" getIngridientItem(index, 'number')?.invalid  &&  getIngridientItem(index, 'number')?.touched">
+                    <ion-text color="danger" *ngIf="getIngridientItem(index, 'number')?.hasError('required')">
+                      Bitte gebe die Anzahl an.
+                    </ion-text>
+                  </div>
+                  <div class="error-msg" *ngIf="getIngridientItem(index, 'measurement')?.invalid  &&  getIngridientItem(index, 'measurement')?.touched">
+                    <ion-text color="danger" *ngIf="getIngridientItem(index, 'measurement')?.hasError('required')">
+                      Bitte gebe die Maßeinheit an.
+                    </ion-text>
+                  </div>
+                  <div class="error-msg" *ngIf="getIngridientItem(index, 'ingridient')?.invalid  &&  getIngridientItem(index, 'ingridient')?.touched">
+                    <ion-text color="danger" *ngIf="getIngridientItem(index, 'ingridient')?.hasError('required')">
+                      Bitte gebe die Zutat an.
+                    </ion-text>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </div>
+            }
+          </div>
+
+          <div formArrayName="steps">
+            <div class="form-action-control">
+              <ion-buttons>
+                <ion-title>Schritte</ion-title>
+                <ion-button color="primary" (click)="addStep()">
+                  <ion-icon slot="icon-only" name="add"></ion-icon>
+                </ion-button>
+                <ion-button color="danger" (click)="delStep()">
+                  <ion-icon slot="icon-only" name="close"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </div>
+            @for (result of stepsControls.controls; track result; let i = $index){
+            <div [formGroupName]="i" class="steps-container">
+              <ion-row>
+
+                <ion-col>
+                  <ion-item fill="fill">
+                    <ion-input type="text" label="Schritt" aria-label="Schritt" labelPlacement="floating"
+                      formControlName="step" [clearInput]="true">
+                    </ion-input>
+                  </ion-item>
+                  <div class="error-msg" *ngIf="getStepItem(i, 'step')?.invalid  &&  getStepItem(i, 'step')?.touched">
+                    <ion-text color="danger" *ngIf="getStepItem(i, 'step')?.hasError('required')">
+                      Bitte gebe den Schritt an.
+                    </ion-text>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </div>
+            }
+          </div>
+
+          <ion-row>
+            <ion-button (click)="onSubmit()">
+              @if(modus == 'created') {
+              Hinzufügen
+              }
+              @if(modus == 'edit') {
+              Bearbeitet
+              }
+            </ion-button>
+          </ion-row>
+
+        </form>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+<!-- </app-basis-layout> -->
