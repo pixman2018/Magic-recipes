@@ -1,0 +1,97 @@
+  @for( recipe of recipes(); track recipe.id) {
+  <ion-row>
+    <ion-col>
+      <ion-card>
+        <ion-card-content>
+          <ion-row>
+            <ion-col size="6">
+              <img src="/assets/pic/c235fe2761d580b125bbce22360873f3.jpg" alt="">
+            </ion-col>
+            <ion-col size="6">
+              <ion-title>
+                {{ recipe?.title }}
+              </ion-title>
+              <ion-text>
+                {{ recipe?.description }}
+              </ion-text>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="footer">
+            <ion-col size="12">
+
+
+
+              <div class="degree-of-difficulty-container">
+                <div class="tooltip-navigation-container">
+                  <ion-button color="light" (click)="onShowTooltip($event, 1)">
+                    <ion-icon name="information-circle-outline"></ion-icon>
+                  </ion-button>
+                </div>
+
+                @for( count of  helperService.createRange(3); track count; let index = $index) {
+                  @if (recipe.degreeOfDifficulty >= (index +1)) {
+                  <ion-icon name="star"></ion-icon>
+                  }
+                  @else {
+                    <ion-icon name="star-outline"></ion-icon>
+                  }
+                }
+              </div>
+
+              <div class="muscle-building-factor-container">
+                <div class="tooltip-navigation-container">
+                  <ion-button color="light" (click)="onShowTooltip($event, 2)">
+                    <ion-icon name="information-circle-outline"></ion-icon>
+                  </ion-button>
+                </div>
+
+                @for( count of  helperService.createRange(3); track count; let index = $index) {
+                  @if (recipe.muscleBuildingFactor >= (index +1)) {
+                  <ion-icon name="star"></ion-icon>
+                  }
+                  @else {
+                    <ion-icon name="star-outline"></ion-icon>
+                  }
+                }
+              </div>
+
+              <div class="weight-loss-factor-container">
+                <div class="tooltip-navigation-container">
+                  <ion-button color="light" (click)="onShowTooltip($event, 3)">
+                    <ion-icon name="information-circle-outline"></ion-icon>
+                  </ion-button>
+                </div>
+                @for( count of  helperService.createRange(3); track count; let index = $index) {
+                  @if (recipe.weightLossFactor >= (index +1)) {
+                  <ion-icon name="star"></ion-icon>
+                  }
+                  @else {
+                    <ion-icon name="star-outline"></ion-icon>
+                  }
+                }
+              </div>
+
+
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+  }
+  @empty {
+    <div class="">
+      <ion-text>Keine Rezepte vorhanden.</ion-text>
+    </div>
+  }
+
+
+
+  <ion-popover #tooltipPopup [isOpen]="isOpen" (didDismiss)="isOpen = false">
+    <ng-template>
+      <ion-content class="ion-padding">
+        {{ activeTooltip }}
+      </ion-content>
+    </ng-template>
+  </ion-popover>

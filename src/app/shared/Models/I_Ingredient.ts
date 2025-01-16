@@ -8,20 +8,6 @@ export interface I_Ingredient {
   updatAtmp: Timestamp,
 }
 
-// export interface I_IngredientInRecipe {
-//   measurements: string,
-//   ingridient: string;
-// }
-
-export interface I_RequiredIngredients {
-  measurements: string,
-  ingridient: string;
-  recipeRefId: string;
-  ingredientRefLink: DocumentReference<DocumentData, DocumentData>;
-  creatAtTmp: Timestamp,
-  updatAtmp: Timestamp,
-}
-
 export interface I_IngredientFrom {
   ingridient: string;
   measurement: string;

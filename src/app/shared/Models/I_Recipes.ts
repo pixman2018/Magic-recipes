@@ -8,15 +8,16 @@ export interface I_Recipe {
   coverUrl: string;
   CookingTime: number;
   PreparationTime: number;
-  DegreeOfDifficulty: number;
-  MuscleBuildingFactor: number;
-  WeightLossFactor: number;
-  NutritionalValue: I_NutritionalValue;
+  degreeOfDifficulty: number;
+  muscleBuildingFactor: number;
+  weightLossFactor: number;
+  nutritionalValue: I_NutritionalValue;
   categories: string[];
   steps: string[];
   materials?: string[],
-  creatAtTmp: Timestamp,
-  updatAtmp: Timestamp,
+  ingredients: string[],
+  creatAt: Timestamp,
+  updatAt: Timestamp,
 }
 
 

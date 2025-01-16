@@ -1,0 +1,17 @@
+ion-card {
+  ion-card-content {
+    ion-title {
+      padding-left: 0;
+    }
+    img {
+      max-width: 300px;
+    }
+  }
+
+  .footer ion-col{
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+
