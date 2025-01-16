@@ -1,0 +1,63 @@
+/*
+********************************************************************************
+*****
+***
+* Basis
+***
+*****
+********************************************************************************
+*/
+
+ion-app {
+    max-width: 560px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+ion-grid {
+  margin-bottom: 80px;
+}
+
+ion-row {
+  width: 100%;
+}
+
+.main-header {
+  ion-title {
+    display: flex;
+    justify-content: center;
+  }
+}
+/*
+********************************************************************************
+*****
+***
+* element alignment
+***
+*****
+********************************************************************************
+*/
+.m-hc {
+  margin:  0 auto;
+}
+
+.xy-center {
+  display: flex;
+  justify-content: flex-end;
+  align-self: center;
+}
+
+.elem-right {
+  display: flex;
+  justify-content: end;
+}
+
+.elem-center {
+  display: flex;
+  justify-content: center;
+}
+
+.action-btn-container {
+  display: flex;
+  justify-content: space-between;
+}

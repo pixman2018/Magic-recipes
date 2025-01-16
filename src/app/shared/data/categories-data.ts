@@ -4,7 +4,12 @@ export const Categories: I_Category[] = [
   {
     de: 'frühstück',
     en: 'breakfast',
-  },{
+  },
+  {
+    de: 'mittagessen',
+    en: 'lunch'
+  },
+  {
     de:  'snacks',
     en: 'snacks'
   },

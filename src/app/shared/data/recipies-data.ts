@@ -1,4 +1,4 @@
-import { I_Recipe } from "../Models/I_Recipies";
+import { I_Recipe } from "../Models/I_Recipes";
 import { Timestamp } from '@angular/fire/firestore';
 
 export const RECIPIES: I_Recipe[] = [

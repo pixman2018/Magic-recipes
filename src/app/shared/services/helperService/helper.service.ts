@@ -1,14 +1,11 @@
 import { Injectable } from '@angular/core';
-import {Location} from '@angular/common';
+import { Location } from '@angular/common';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class HelperService {
-
-  constructor(
-    private _location: Location,
-  ) { }
+  constructor(private _location: Location) {}
 
   /**
    *
@@ -18,7 +15,7 @@ export class HelperService {
    * @returns number[]
    *
    */
-      /**
+  /**
    *
    * @public
    * @param number
@@ -29,12 +26,11 @@ export class HelperService {
    * create a array with X length
    *
    */
-  public createRange(number: number): number[]{
-    return new Array(number).fill(0)
-      .map((n, index) => index + 1);
+  public createRange(number: number): number[] {
+    return new Array(number).fill(0).map((n, index) => index + 1);
   }
 
-      /**
+  /**
    *
    * @public
    * @memberof HelperService
@@ -47,14 +43,14 @@ export class HelperService {
     this._location.back();
   }
 
-      /**
+  /**
    *
    * @protected
    * @param item
    * @memberof HelperService
    *
    * @description
-    * Check is Item exist
+   * Check is Item exist
    * If not, the method is called again after 300 milliseconds
    *
    */
@@ -66,7 +62,7 @@ export class HelperService {
     }
   }
 
-      /**
+  /**
    *
    * @public
    * @returns void | true
@@ -82,8 +78,7 @@ export class HelperService {
     }, 300);
   }
 
-
-    /**
+  /**
    *
    * @public
    * @param number
@@ -95,10 +90,10 @@ export class HelperService {
    *
    */
   public round2Digits(number: number): number {
-   return Math.round(number * 100) / 100;
+    return Math.round(number * 100) / 100;
   }
 
-      /**
+  /**
    *
    * @public
    * @param lenght
@@ -111,7 +106,8 @@ export class HelperService {
    *
    */
   public generateToken(lenght: number, base64: boolean = false): string {
-    const chars: string = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_-+*';
+    const chars: string =
+      'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_-+*';
     let token: string = '';
     for (let i = 0; i < lenght; i++) {
       token += chars[Math.floor(Math.random() * chars.length)];
@@ -120,5 +116,59 @@ export class HelperService {
       btoa(token);
     }
     return token;
+  }
+
+  /**
+   *
+   * @public
+   * @param array
+   * @param key
+   * @param itemToBeDeleted
+   * @returns any[]
+   * @memberof HelperService
+   *
+   * @description
+   * deletes an object according to the passed value(itemToBeDeleted) from the key(key)
+   *
+   */
+  public deleteObjectFromArray(
+    array: any[],
+    key: string,
+    itemToBeDeleted: any
+  ): any[] {
+    return array.filter((item) => item[key] != itemToBeDeleted);
+  }
+
+  /**
+   *
+   * @public
+   * @param array
+   * @param itemToBeDeleted
+   * @returns any[]
+   * @memberof HelperService
+   *
+   * @description
+   * deletes an item from the array according to its contents
+   *
+   */
+  public deleteItemFromArrayByValue(array: any[], itemToBeDeleted: any): any[] {
+    return array.filter((item) => item != itemToBeDeleted);
+  }
+
+    /**
+   *
+   * @public
+   * @param array
+   * @param index
+   * @returns any[]
+   * @memberof HelperService
+   *
+   * @description
+   * deletes item from array according to its index
+   *
+   */
+  public deleteItemFromArrayByIndex(array: any[], index: number): any[] {
+    array.splice(index, 1);
+    return array;
   }
 }
