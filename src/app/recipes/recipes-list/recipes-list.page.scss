@@ -8,6 +8,11 @@ ion-card {
     }
   }
 
+  .calories-container {
+    display: flex;
+    align-items: flex-end;
+  }
+
   .footer ion-col{
     display: flex;
     justify-content: space-between;
@@ -15,3 +20,12 @@ ion-card {
 }
 
 
+.no-item-container {
+  color: var(--ion-color-danger);
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.last-item {
+  margin-bottom: 4rem;
+}

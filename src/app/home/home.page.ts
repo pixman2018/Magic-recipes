@@ -1,13 +1,12 @@
-import { Component, effect, inject, OnInit, signal, WritableSignal } from '@angular/core';
+import { Component, effect, inject, OnInit, signal } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { Firestore } from '@angular/fire/firestore';
 
-
-import {  I_Recipe } from '../shared/Models/I_Recipes';
-import { I_Ingredient } from '../shared/Models/I_Ingredient';
-import { RecipesService } from '../shared/services/recipes/recipes.service';
-import { IngredientsService } from '../shared/services/ingredients-service/ingredients.service';
+// component
 import { RecipeFormPage } from '../recipes/recipe-form/recipe-form.page';
+// services
+import { RecipesService } from '../shared/services/recipesService/recipes.service';
+// interfaces
+import { I_Recipe } from '../shared/Models/I_Recipes';
 
 @Component({
   selector: 'app-home',
@@ -15,19 +14,11 @@ import { RecipeFormPage } from '../recipes/recipe-form/recipe-form.page';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
-
-  private _firestore = inject(Firestore);
-  private _recipiesService = inject(RecipesService);
-  private _ingridientService = inject(IngredientsService);
-
-  protected recipes = signal<I_Recipe[]>([]);
-  protected ingridients: I_Ingredient[] = [];
   // AI
   private _modalCtrl = inject(ModalController);
+  private _recipiesService = inject(RecipesService);
 
-  protected message: string = 'This modal example uses the modalController to present and dismiss modals.';
-
-
+  protected recipes = signal<I_Recipe[]>([]);
 
   constructor() {
     this._constructComponent();
@@ -35,14 +26,12 @@ export class HomePage implements OnInit {
     effect(() => console.log('recipies', this.recipes));
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   private _loadAllRecipies() {
-    this._recipiesService.getAll()
-      .then((recipes: I_Recipe[]) => {
-        this.recipes.set([...recipes]);
-      });
+    this._recipiesService.getAll().then((recipes: I_Recipe[]) => {
+      this.recipes.set([...recipes]);
+    });
   }
 
   async onOpenRecipiesFormModal() {
@@ -50,24 +39,15 @@ export class HomePage implements OnInit {
       component: RecipeFormPage,
       componentProps: {
         modus: 'created',
-      }
+      },
     });
     modal.present();
 
     const { data } = await modal.onWillDismiss();
-    this.recipes.set([
-      data,
-      ...this.recipes(),
-    ]);
-
+    this.recipes.set([data, ...this.recipes()]);
   }
 
-
-
-
-private _constructComponent() {
-  this._loadAllRecipies();
-}
-
-
+  private _constructComponent() {
+    this._loadAllRecipies();
+  }
 }

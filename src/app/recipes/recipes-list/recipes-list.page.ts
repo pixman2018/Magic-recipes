@@ -1,4 +1,11 @@
-import { Component, inject, input, OnInit, Signal, ViewChild, viewChild, signal, ElementRef, effect } from '@angular/core';
+import {
+  Component,
+  inject,
+  input,
+  viewChild,
+  ElementRef,
+  effect,
+} from '@angular/core';
 import { I_Recipe } from 'src/app/shared/Models/I_Recipes';
 import { HelperService } from 'src/app/shared/services/helperService/helper.service';
 
@@ -7,10 +14,33 @@ import { HelperService } from 'src/app/shared/services/helperService/helper.serv
   templateUrl: './recipes-list.page.html',
   styleUrls: ['./recipes-list.page.scss'],
 })
-export class RecipesListPage implements OnInit {
+export class RecipesListPage  {
+  /**
+   *
+   * @memberof RecipesListPage
+   * @description
+   * Outputs all recipes that come from the “Home Page”
+   * and supports the user
+   * with the tooltip while reading
+   *
+   * @methods
+   * tooltip
+   *  onShowTooltip(event: Event, indexTooltip: number): void
+   * private _openPopup(event: Event): void
+   *
+   */
 
+  /*
+   ********************************************************************************
+   * DI
+   ********************************************************************************
+   */
   public helperService = inject(HelperService);
-
+  /*
+   ********************************************************************************
+   * signals
+   ********************************************************************************
+   */
   public recipes = input.required<I_Recipe[]>();
   public tooltipPopup = viewChild('tooltipPopup', {
     read: ElementRef,
@@ -23,10 +53,18 @@ export class RecipesListPage implements OnInit {
     effect(() => console.log('signal recipes ', this.recipes()));
   }
 
-  ngOnInit() {
-
-  }
-
+  /**
+   *
+   * @protected
+   * @param event
+   * @param indexTooltip
+   * @memberof RecipesListPage
+   *
+   * @description
+   * sets the tooltip text to be displayed in the 'activeTooltip' property
+   * and starts the method '_openPopup(event)'
+   *
+   */
   protected onShowTooltip(event: Event, indexTooltip: number) {
     switch (indexTooltip) {
       case 1:
@@ -43,12 +81,22 @@ export class RecipesListPage implements OnInit {
         break;
     }
   }
-
+  /**
+   *
+   * @protected
+   * @param event
+   * @memberof RecipesListPage
+   *
+   * @description
+   * sets the property 'isOpen' to true
+   * and sets the value for the 'tooltipPopup' signal
+   * with the value of the 'event' property
+   */
   private _openPopup(event: Event) {
     this.isOpen = true;
     if (this.tooltipPopup()) {
       this.tooltipPopup()!.nativeElement.event = event;
-       console.log('event', event)
+      console.log('event', event);
     }
   }
 }

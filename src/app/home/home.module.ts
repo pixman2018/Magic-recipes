@@ -7,7 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { HomePageRoutingModule } from './home-routing.module';
 
 import { HomePage } from './home.page';
-import { RecipiesListPageModule } from '../recipes/recipes-list/recipes-list.module';
+import { RecipesListPageModule } from '../recipes/recipes-list/recipes-list.module';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { RecipiesListPageModule } from '../recipes/recipes-list/recipes-list.mod
     FormsModule,
     IonicModule,
     HomePageRoutingModule,
-    RecipiesListPageModule,
+    RecipesListPageModule,
+    SharedModule,
   ],
   declarations: [HomePage]
 })

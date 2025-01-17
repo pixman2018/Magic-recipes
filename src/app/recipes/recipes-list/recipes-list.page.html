@@ -1,13 +1,29 @@
-  @for( recipe of recipes(); track recipe.id) {
+  @for( recipe of recipes(); track recipe.id; let last = $last) {
   <ion-row>
     <ion-col>
-      <ion-card>
+      <ion-card class="c-pointer" [routerLink]="['/recipe', recipe.id]" [ngClass]="{'last-item': last}">
         <ion-card-content>
           <ion-row>
             <ion-col size="6">
-              <img src="/assets/pic/c235fe2761d580b125bbce22360873f3.jpg" alt="">
+              <!--
+              ********************************************************************************
+              * cover pic
+              ********************************************************************************
+              -->
+              @if (recipe.coverPic) {
+                <img src="/assets/pic/recipes/{{recipe.coverPic}}" alt="">
+              }
+              @else {
+                <img src="/assets/pic/app/placeholder.png" alt="">
+              }
+
             </ion-col>
             <ion-col size="6">
+                  <!--
+                ********************************************************************************
+                * content
+                ********************************************************************************
+                -->
               <ion-title>
                 {{ recipe?.title }}
               </ion-title>
@@ -17,11 +33,15 @@
             </ion-col>
           </ion-row>
 
+          <!--
+              ********************************************************************************
+              * degree-of-difficulty
+              * muscle-building-factor
+              * weight-loss-factor
+              ********************************************************************************
+              -->
           <ion-row class="footer">
             <ion-col size="12">
-
-
-
               <div class="degree-of-difficulty-container">
                 <div class="tooltip-navigation-container">
                   <ion-button color="light" (click)="onShowTooltip($event, 1)">
@@ -72,7 +92,9 @@
                 }
               </div>
 
-
+              <div class="calories-container">
+                kcal: {{ recipe.nutritionalValue.calories }}
+              </div>
             </ion-col>
           </ion-row>
         </ion-card-content>
@@ -81,7 +103,7 @@
   </ion-row>
   }
   @empty {
-    <div class="">
+    <div class="no-item-container">
       <ion-text>Keine Rezepte vorhanden.</ion-text>
     </div>
   }
