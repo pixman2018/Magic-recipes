@@ -1,7 +1,9 @@
 @if(translucent) {
 <ion-header [translucent]="true" class="main-header">
   <ion-toolbar color="">
-    <ion-title size="large" color="">{{ headline | titlecase }}</ion-title>
+    <ion-title size="large" color="">
+      <h1>{{ headline() }}</h1>
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -9,11 +11,11 @@
 
 
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="ion-margin-start">
   @if(!translucent) {
   <ion-header class="main-header">
     <ion-toolbar color="">
-      <ion-title size="large" color="">{{ headline | titlecase }} </ion-title>
+      <ion-title size="large" color="">{{ headline() }} </ion-title>
     </ion-toolbar>
   </ion-header>
   }

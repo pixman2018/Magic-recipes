@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, input } from '@angular/core';
 import { Platform } from '@ionic/angular';
 
 
@@ -8,7 +8,8 @@ import { Platform } from '@ionic/angular';
   styleUrls: ['./basis-layout.component.scss'],
 })
 export class BasisLayoutComponent implements OnInit {
-  @Input() headline!: string;
+
+  headline = input.required<string>();
 
   protected translucent: boolean = true;
 

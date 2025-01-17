@@ -10,7 +10,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "emulator": "firebase emulators:start --import sample-recipies"
+    "emulator": "firebase emulators:start --import sample-recipes"
   },
   "private": true,
   "dependencies": {

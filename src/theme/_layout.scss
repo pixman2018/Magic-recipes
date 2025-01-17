@@ -15,7 +15,7 @@ ion-app {
 }
 
 ion-grid {
-  margin-bottom: 80px;
+  margin-bottom: 60px;
 }
 
 ion-row {
@@ -60,4 +60,8 @@ ion-row {
 .action-btn-container {
   display: flex;
   justify-content: space-between;
+}
+
+.no-margin {
+  margin: 0!important;
 }

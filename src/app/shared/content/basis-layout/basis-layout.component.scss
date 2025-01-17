@@ -1,3 +1,7 @@
+ion-header {
+  margin-bottom: 1rem;
+}
+
 ion-title {
   display: flex;
   justify-content: center;
@@ -6,4 +10,5 @@ ion-title {
 
 ion-content {
   height: 100vh;
+  margin-bottom: 4rem;
 }
