@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { recipeResolver } from './recipes/recipeResolver/recipe.resolver';
 
 const routes: Routes = [
   {
@@ -16,11 +17,14 @@ const routes: Routes = [
     loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
   },
   {
-    path: 'recipies-list',
-    loadChildren: () => import('./recipes/recipes-list/recipes-list.module').then( m => m.RecipiesListPageModule)
+    path: 'recipes-list',
+    loadChildren: () => import('./recipes/recipes-list/recipes-list.module').then( m => m.RecipesListPageModule)
   },
   {
     path: 'recipe/:recipeId',
+    resolve: {
+      recipe: recipeResolver,
+    },
     loadChildren: () => import('./recipes/recipe/recipe.module').then( m => m.RecipePageModule)
   },
   {

@@ -1,13 +1,272 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>recipe</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-basis-layout [headline]="recipe()?.title ?? 'Rezept'">
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">recipe</ion-title>
-    </ion-toolbar>
-  </ion-header>
-</ion-content>
+
+  @if (recipe()) {
+
+  <!--
+    ********************************************************************************
+    * back button
+    ********************************************************************************
+    -->
+  <ion-row class="back-button-container ion-margin-bottom">
+    <ion-col>
+      <ion-button fill="outline" color="dark" [routerLink]="['/']">
+        <ion-icon name="arrow-back"></ion-icon><ion-text>Rezepte Übersicht</ion-text>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+  <!--
+    ********************************************************************************
+    * cover pic
+    ********************************************************************************
+    -->
+  <ion-row class="no-margin">
+    <ion-col>
+      <header>
+        <figure>
+          @if (recipe()?.coverPic) {
+          <img src="/assets/pic/recipes/{{recipe()?.coverPic}}" alt="">
+          }
+          @else {
+          <img src="/assets/pic/app/placeholder.png" alt="">
+          }
+        </figure>
+      </header>
+    </ion-col>
+  </ion-row>
+  <!--
+    ********************************************************************************
+    * title
+    ********************************************************************************
+    -->
+  <ion-row class="no-margin">
+    <ion-col>
+      <ion-label>
+        <h1>{{ recipe()?.title }}</h1>
+      </ion-label>
+    </ion-col>
+  </ion-row>
+  <!--
+    ********************************************************************************
+    * description
+    ********************************************************************************
+    -->
+  <ion-row>
+    <ion-col>
+      <ion-text>
+        {{ recipe()?.description }}
+      </ion-text>
+    </ion-col>
+  </ion-row>
+
+  <!--
+    ********************************************************************************
+    * degree-of-difficulty
+    * muscle-building-factor
+    * weight-loss-factor
+    ********************************************************************************
+    -->
+  <div class="info-container">
+    <ion-row class="info-content">
+      <ion-col>
+        <div class="tooltip-navigation-container">
+          <ion-button color="light" (click)="onShowTooltip($event, 0)">
+            <ion-icon name="information-circle-outline"></ion-icon>
+          </ion-button>
+          <div>
+            <ion-text>{{ recipe()?.cookingTime }} Min.</ion-text>
+          </div>
+          <div>
+            <ion-text>{{ recipe()?.preparationTime }} Min.</ion-text>
+          </div>
+        </div>
+
+        <div class="degree-of-difficulty-container">
+          <div class="tooltip-navigation-container">
+            <ion-button color="light" (click)="onShowTooltip($event, 1)">
+              <ion-icon name="information-circle-outline"></ion-icon>
+            </ion-button>
+          </div>
+          @for( count of helperService.createRange(3); track count; let index = $index) {
+          @if (recipe()!.degreeOfDifficulty >= (index +1)) {
+          <ion-icon name="star"></ion-icon>
+          }
+          @else {
+          <ion-icon name="star-outline"></ion-icon>
+          }
+          }
+        </div>
+
+        <div class="muscle-building-factor-container">
+          <div class="tooltip-navigation-container">
+            <ion-button color="light" (click)="onShowTooltip($event, 2)">
+              <ion-icon name="information-circle-outline"></ion-icon>
+            </ion-button>
+          </div>
+          @for( count of helperService.createRange(3); track count; let index = $index) {
+          @if (recipe()!.muscleBuildingFactor >= (index +1)) {
+          <ion-icon name="star"></ion-icon>
+          }
+          @else {
+          <ion-icon name="star-outline"></ion-icon>
+          }
+          }
+        </div>
+
+        <div class="weight-loss-factor-container">
+          <div class="tooltip-navigation-container">
+            <ion-button color="light" (click)="onShowTooltip($event, 3)">
+              <ion-icon name="information-circle-outline"></ion-icon>
+            </ion-button>
+          </div>
+          @for( count of helperService.createRange(3); track count; let index = $index) {
+          @if (recipe()!.weightLossFactor >= (index +1)) {
+          <ion-icon name="star"></ion-icon>
+          }
+          @else {
+          <ion-icon name="star-outline"></ion-icon>
+          }
+          }
+        </div>
+      </ion-col>
+    </ion-row>
+  </div>
+  <!--
+    ********************************************************************************
+    * nutritional-values
+    ********************************************************************************
+    -->
+  <div class="nutritional-values-and-ingredients ">
+    <ion-row class="">
+      <ion-col>
+        <header class="nutritional-values-and-ingredients-header">
+          <ion-label>
+            Zutaten für <input class="portion-control" [value]="recipe()!.portions ?? 0" /> Portion(en)
+          </ion-label>
+        </header>
+        <div class="nutritional-values-and-ingredients-content">
+          <ion-list>
+            @for (ingredient of recipe()!.ingidients; track ingredient) {
+            <ion-item>
+              <ion-text>{{ ingredient.number }} {{ ingredient.measurement }} {{ ingredient.ingridient }}</ion-text>
+            </ion-item>
+            }
+          </ion-list>
+        </div>
+      </ion-col>
+    </ion-row>
+    <!--
+    ********************************************************************************
+    * ingredients
+    ********************************************************************************
+    -->
+    <ion-row class="nutritional-values-and-ingredients-container">
+      <ion-col>
+        <header class="nutritional-values-and-ingredients-header">
+          <ion-label>
+            Nährwerte pro Portion
+          </ion-label>
+        </header>
+        <div class="nutritional-values-and-ingredients-content">
+          <ion-list>
+            <ion-item>
+              <ion-text>Kalorien (kcal)</ion-text>
+              <ion-text class="nutritional-values-result">{{ recipe()?.nutritionalValue?.calories }}</ion-text>
+            </ion-item>
+            <ion-item>
+              <ion-text>Eiweiß</ion-text>
+              <ion-text class="nutritional-values-result">{{ recipe()?.nutritionalValue?.portien }}</ion-text>
+            </ion-item>
+            <ion-item>
+              <ion-text>Kohlenhydrate</ion-text>
+              <ion-text class="nutritional-values-result">{{ recipe()?.nutritionalValue?.carbohydrates }}</ion-text>
+            </ion-item>
+            <ion-item>
+              <ion-text>Fett</ion-text>
+              <ion-text class="nutritional-values-result">{{ recipe()?.nutritionalValue?.fats }}</ion-text>
+            </ion-item>
+          </ion-list>
+        </div>
+      </ion-col>
+    </ion-row>
+    <!--
+    ********************************************************************************
+    * recipe
+    ********************************************************************************
+    -->
+    @if(recipe() && recipe()?.materials?.length) {
+    <ion-row class="material-container">
+      <ion-col>
+        <ion-text>
+          Du benötigst dafür: {{ recipe()?.materials }}
+        </ion-text>
+      </ion-col>
+    </ion-row>
+    }
+
+    <!--
+    ********************************************************************************
+    * preparation
+    ********************************************************************************
+    -->
+    <div class="preparation-container">
+      <ion-row>
+        <ion-col>
+          <ion-label>Zubereitung</ion-label>
+          <ion-list>
+            @for (step of recipe()?.steps; track step; let index = $index;) {
+            <ion-item lines="none" class="step-container">
+              <ion-text>{{index+1}}. {{ step | ucfirst}}</ion-text>
+            </ion-item>
+            }
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </div>
+
+    <!--
+    ********************************************************************************
+    * category
+    ********************************************************************************
+    -->
+    <div class="category-container">
+      <ion-row>
+        <ion-col>
+          <ion-label class="ion-margin-end">Kategorie:</ion-label>
+          <div class="">
+
+            @for (category of recipe()?.categories; track category; let last = $last) {
+            <ion-text>
+              {{ category['de'] | ucfirst }}
+
+            </ion-text>
+            @if (!last) {
+            ,&nbsp;
+            }
+            }
+          </div>
+        </ion-col>
+      </ion-row>
+    </div>
+
+  </div>
+  }
+</app-basis-layout>
+
+
+<!--
+********************************************************************************
+*****
+***
+* Template
+***
+*****
+********************************************************************************
+-->
+<ion-popover #tooltipPopup [isOpen]="isOpen" (didDismiss)="isOpen = false">
+  <ng-template>
+    <ion-content class="ion-padding">
+      {{ activeTooltip }}
+    </ion-content>
+  </ng-template>
+</ion-popover>

@@ -1,0 +1,86 @@
+ion-title {
+  padding-left: 0;
+}
+
+ion-label {
+  font-weight: 700;
+}
+
+ion-list {
+  ion-item:not(.step-container) {
+    --background: var(  --ion-color-light);
+  }
+  ion-item:nth-child(odd):not(.step-container) {
+   --background: darken(var(  --ion-color-light), 40%);
+  }
+}
+
+
+.nutritional-values-and-ingredients-header {
+  display: flex;
+  height: 2,0625rem;
+  margin-left: 15px;
+
+  .portion-control {
+    width: 2rem;
+    height: 1.5rem;
+    margin: 0 0.25rem;
+    text-align: right;
+  }
+
+}
+
+.nutritional-values-and-ingredients-content {
+  .nutritional-values-result {
+    margin-left: auto;
+  }
+}
+
+.category-container {
+  margin-bottom: 1rem;
+  ion-col {
+    display: flex;
+    align-items: top;
+  }
+  ion-badge {
+    --padding-end: 1rem;
+    --padding-start: 1rem;
+    // --background: red;
+  }
+
+}
+
+.step-container:not(:last-child) {
+  margin-bottom: 1rem;
+}
+
+// ion-row {
+//   margin-bottom: 2rem;
+// }
+
+.info-content {
+  margin: 1rem 0;
+  ion-col {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+h1 {
+  margin: 0;
+}
+
+.info-content,
+.material-container,
+.nutritional-values-and-ingredients-container,
+.preparation-container,
+.category-container {
+  margin: 1rem 0;
+}
+
+.back-button-container  {
+ ion-nav {
+  display: flex;
+  align-items: center;
+ }
+}
